@@ -30,7 +30,7 @@ boolean panelAbierto;
     }
    
 }   
-class Palanca{
+class Palanca extends Estres{
   int x,y;
   float palancaX,palancaY;
   boolean enPalanca;
@@ -75,10 +75,17 @@ class Palanca{
           if(tiempoActivada>=120){
             palancaY=250;
             activada=false;
+            reiniciar();
           }         
       }
-    }      
+    }  
+       void reiniciar(){
+       if(camarasDesconectadas){
+         camarasDesconectadas=false;
+         }
+       }
 }
+
 int n=8;
 class Cables {
   int espacioX=500,espacioY=160;
@@ -116,7 +123,6 @@ float radio = 75;
    
         
 }
-
 
 Panel P=new Panel();
 Cables C[]= new Cables[n];

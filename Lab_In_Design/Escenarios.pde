@@ -49,6 +49,7 @@ void escenarios(){
            dd.dibujar();
              V.dibujar();
              S.ventilacionActual=0;
+            
        }
        break;
        
@@ -96,6 +97,7 @@ void escenarios(){
       dd.dibujar();
       bajar.dibujar();
       cafe.dibujar();
+      cafe.tomarCafe();   
       }
       break;
         case 7:{
@@ -120,6 +122,7 @@ void escenarios(){
       hs.esconder();
         V.dibujar();
          S.ventilacionActual=3;
+         cafe.recogerGranos();
       }
       break;
       
@@ -163,5 +166,5 @@ void escenarios(){
       
     }//FIN DEL SWITCH
 
-
+  
 }

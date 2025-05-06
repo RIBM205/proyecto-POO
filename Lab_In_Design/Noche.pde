@@ -19,10 +19,7 @@ class Noches{
     tiempoJugado= millis()-tiempoNoche-tiempoPausa;} 
      if (tiempoJugado >= 570000) { //La duracion total de la noche es de 9 minutos y medio
       println("FIN");
-    }
- 
-    
-     
+    }   
   }
 
 void enPausa() {

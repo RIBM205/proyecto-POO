@@ -1,5 +1,6 @@
 boolean ActiveMenu=true;
 boolean pausa=false;
+boolean enMapa;
 
 class Menus{
   int playX=width*3+50,playY=height*3;
@@ -10,7 +11,7 @@ class Menus{
   int mapaX=width*3+50,mapaY=height*3+50;
   
    int creX=width*9,creY=height*6;
-  int volverX=width,volverY=height;
+  int volverX=0,volverY=0;
   
 
   
@@ -35,8 +36,9 @@ class Menus{
   }
   
   void PausaMenu(){
-   fill(255);
+  
    
+  if(!enMapa){
   fill(255);
   rect(resX,resY,500,100);
   fill(0);
@@ -56,13 +58,74 @@ class Menus{
   textSize(75);
   text("Menu Principal",370,580);
   }
+ } 
+  void mapa(){
+  if(enMapa){
+  image(mapaLab,0,0,width,height);
+  
+    fill(255);
+ rect(volverX,volverY,500,100);
+  fill(0);
+  textSize(75);
+  text("Volver",width/12+20,height/8-30);
+  
+   noStroke();
+   fill(50);
+    switch(escenario){
+    
+    case 0: {circle(width/5.41,height/1.23,25);}
+    break;
+    
+    case 1: {circle(width/12+77,height/2+27,25);}
+    break;
+    
+    case 2: {circle(width/4+53,height/2+23,25);}
+    break;
+    
+    case 3: {circle(width/4+9,height/4+20,25);}
+    break;
+    
+    case 4: {circle(width/2+173,height/8+58,25);}
+    break;
+    
+    case 5: {circle(width-52,height/8+58,25);}
+    break;
+    
+    case 6: {circle(width/2+80,height/4+101,25);}
+    break;
+    
+    case 7: {circle(width/2-34,height/2+63,25);}
+    break;
+    
+    case 8: {circle(width/2+80,height/2+119,25);}
+    break;
+    
+    case 9: {circle(width-181,height/4+88,25);}
+    break;
+    
+    case 10: {circle(width/6+72,height/4+120,25);}
+    break;
+    
+    case 11: {circle(width/4+58,height/4+120,25);}
+    break;
+    
+    case 12: {circle(width/3+49,height/4+120,25);}
+    break;
+    
+    case 13: {circle(width/3+49,height/2+140,25);}
+    break;
+    
+    case 14: {circle(width/4+58,height/2+140,25);}
+    break;
+    
+    case 15: {circle(width/6+72,height/2+140,25);}
+    break;
+  
+
+  }//Fin del Switch
+
+  }
+  }
 }
 
 Menus MM= new Menus();
-
-
-void mapa(){
-
-
-
-}

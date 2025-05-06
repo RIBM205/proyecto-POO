@@ -1,105 +1,113 @@
+class Enemy {
+  int dificultad;
+  int nodoActual;
+  int nodoAnterior;
+  int posMerodeador;
+  boolean mostrarMerodeador;
+  int movimiento = 0;
+  int intervalo = 120;
+  
+  //Para la logica de persecucion
+  boolean enPersecucion;
+  int delay;
+  int tiempoEspera;
+  int tiempoMaximo=120;
+  boolean jugadorHuyo;
+  int finality;
+  
 
 
-class merodeador{
-  int opciones,opcionA,opcionB,opcionC,opcionD;
-  int merodeadorPos;
-  float tiempoMerodeador;
-  void generar(){
-//ESTE CODIGO NO FUNCIONA; NO TIENE SENTIDO LOS MOVIMIENTOS XDDDDDDDDDDD
-  image(merodeador,0,0,200,200);
+  Enemy(int difi, int inicio) {
+    dificultad = difi;
+    nodoActual = inicio;
+    nodoAnterior = inicio;
   }
-  void mover(){
-    switch(escenario){
-      case 0:if(escenario==0){
-        opcionA=2;
-        opcionB=3;
-        }
-        break;
-      case 1:if(escenario==1){
-        opcionA=3;
-        }
-        break;
-      case 2:if(escenario==2){
-      opcionA=0;
-      opcionB=4;
-        }
-        break;
-      case 3:if(escenario==3){
-      opcionA=0;
-      opcionB=1;
-      opcionC=5;
-        }
-        break;
-      case 4:if(escenario==4){
-      opcionA=2;
-        }
-        break;
-      case 5:if(escenario==5){
-      opcionA=3;
-      opcionB=6;
-        }
-        break;
-      case 6:if(escenario==6){
-      opcionA=5;
-      opcionB=12;
-      opcionC=13;
-        }
-        break;
-      case 7:if(escenario==7){
-      opcionA=8;
-        }
-        break;
-      case 8:if(escenario==8){
-      opcionA=7;
-      opcionB=12;
-        }
-        break;
-      case 9:if(escenario==9){
-      opcionA=13;
-      opcionB=10;
-        }
-        break;
-      case 10:if(escenario==10){
-      opcionA=9;
-        }
-        break;
-      case 11:if(escenario==12){
-      opcionA=6;
-      opcionB=8;
-        }
-        break;
-      case 12:if(escenario==13){
-      opcionA=9;
-      opcionB=6;
-      }
-      break;
-    }
-    tiempoMerodeador+=0.1;
-    
-    if(tiempoMerodeador>=10){
-    opciones=int(random(0,4));
-   
-    switch(opciones){
-    case 0:
-    opciones=opcionA;
-    break;
-    case 1:
-    opciones=opcionB;
-    break;
-    case 2:
-    opciones=opcionC;
-    break;
-    case 3:
-    opciones=opcionD;
-    break;
-      }
-    merodeadorPos=opciones;
-       tiempoMerodeador=0;
-       }
-     // println(merodeadorPos);
-    //println(tiempoMerodeador);
+
+
+    int[][] adyacentes = {
+      {1},                    // 0
+      {0, 2, 3},              // 1
+      {1, 10, 11, 12, 13, 14, 15}, // 2
+      {1, 4, 5},              // 3
+      {3, 6},                 // 4
+      {3, 9},                 // 5
+      {4, 7, 8},              // 6
+      {6},                   // 7
+      {6},                   // 8
+      {5},                   // 9
+      {2},                   // 10
+      {2},                   // 11
+      {2},                   // 12
+      {2},                   // 13
+      {2},                   // 14
+      {2}                    // 15
+    };
+
+  
+  int getNodo() {
+    return nodoActual;
   }
+
  
-}
+  void update() {
+    if(!enPartida) return;
+    
+    movimiento++;
+  if (movimiento >= intervalo) {
+    movimiento = 0;
+    
+    
+    int number = int(random(0, 20));
 
-merodeador M= new merodeador();
+    if (number < dificultad) {
+    
+      int[] vecinos = adyacentes[nodoActual];
+      int elegido = int(random(vecinos.length));
+      nodoAnterior = nodoActual;
+      nodoActual = vecinos[elegido];
+    } else if (number > dificultad) {
+
+      if (nodoAnterior != nodoActual) {
+        int temp = nodoActual;
+        nodoActual = nodoAnterior;
+        nodoAnterior = temp;
+        
+      }
+    }
+   } 
+  }
+  void generar(){
+ 
+  if(nodoActual==escenario){
+     image(merodeador,width/2,height/2);
+    }
+  }
+  void caceria(){
+    //println(nodoAnterior);
+    
+    if(nodoActual==escenario){
+    enPersecucion=true;
+    jugadorHuyo=false;
+    tiempoEspera=0;
+    finality++;
+    
+    if(finality>=tiempoMaximo){
+    JS.merodeadorJS();
+    JS.merodeadorJumpscare=true;
+   
+    }
+   } else if(enPersecucion&&jugadorHuyo){
+     delay++;
+     
+     if(delay>tiempoMaximo){
+     
+   }
+   } 
+   
+   
+     
+  }
+  }
+
+
+Enemy M= new Enemy(10,10);

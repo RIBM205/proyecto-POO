@@ -34,6 +34,7 @@ void mouseDragged() {
       PL.palancaY += 10;
     }
   }
+
 }
 
 
@@ -73,14 +74,18 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
   }
  }
  if(pausa){
-   if(mouseX>MM.resX && mouseY>MM.resY && mouseX<MM.resX+500 && mouseY<MM.resY+100){
+   if(!enMapa&&mouseX>MM.resX && mouseY>MM.resY && mouseX<MM.resX+500 && mouseY<MM.resY+100){
      pausa=false;
    }
    if(mouseX>MM.mapaX && mouseY>MM.mapaY && mouseX<MM.mapaX+500 && mouseY<MM.mapaY+100){
-   mapa();
+   enMapa=true;
+   }
+   if(mouseX>MM.volverX && mouseY>MM.volverY && mouseX<MM.volverX+500 && mouseY<MM.volverY+100){
+   enMapa=false;
    }
    
-   if(mouseX>MM.mainX && mouseY>MM.mainY && mouseX<MM.mainX+500 && mouseY<MM.mainY+100){
+   
+   if(!enMapa&&mouseX>MM.mainX && mouseY>MM.mainY && mouseX<MM.mainX+500 && mouseY<MM.mainY+100){
    pausa=false;
    ActiveMenu=true;
    GM.reset();
@@ -253,6 +258,38 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
             P.panelAbierto=false;
             }
            }
-         }  
+           
+           if(escenario==6){
+           if(!cafe.enCafetera){ 
+          if(mouseX>cafe.cafeX&&mouseY>cafe.cafeY&&mouseX<cafe.cafeX+300&&mouseY<cafe.cafeY+200){
+            cafe.enCafetera=true;
+          } 
+        }  
+        
+          if(cafe.enCafetera==true){
+            if(!cafe.llenando&&cafe.granosRestantes>0&&!cafe.cafeListo&&mouseX>cafe.granosX&&mouseY>cafe.granosY&&mouseX<cafe.granosX+50&&mouseY<cafe.granosY+50){
+              cafe.llenar();
+              cafe.llenando=true;
+              cafe.granosRestantes--;
+            }
+            if(cafe.cafeListo){
+              if(mouseX>cafe.tazaX&&mouseY>cafe.tazaY&&mouseX<cafe.tazaX+50&&mouseY<cafe.tazaY+50){
+                estres-=10;
+                cafe.cafeListo=false;   
+              }  
+            } 
+          }
+
+           
+           } //Si el escenario es 6
+             if(escenario==9&&mouseX>cafe.bolsaX&&mouseY>cafe.bolsaY&&mouseX<cafe.bolsaX+50&&mouseY<cafe.bolsaY+50){
+              if(cafe.granosRestantes<3){
+              cafe.granosRestantes++;             
+             } else {
+               fill(0);
+               text("No deberia de llevar mas granos",width/2,height/1.5);
+             }
+            }
+         }  //Si estas en partida
              
 }//Fin de la funcion

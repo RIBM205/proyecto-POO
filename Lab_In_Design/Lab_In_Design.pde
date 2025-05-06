@@ -25,24 +25,33 @@ void draw(){
 background(0,0);
 GM.configuracion();
  //println(S.espera);
- println(noches.tiempoJugado);
+ //println(noches.tiempoJugado);
  
   noches.enPausa(); 
-  
+  println(estres);
 
 
   if(enPartida==true){
     A.avanzar();
-    M.mover();
     escenarios();
     A.scare();
     sonidos();
     S.generar();
     PL.bajar();
     noches.tiempoNoche();
+    M.update();
+    M.getNodo();
+    M.generar();
+    M.caceria();
+    cafe.llenar();
+    EST.dificultad();
     
-    
+    if(cerrado&&estres<=100){
+     EST.aumentar();
+   }
+
  if(camarasCerradas==false){
+   if(!camarasDesconectadas){
   image(cam1,0,0,width,height); // Se abre a camara 1
   
   if(camara==2)
@@ -57,12 +66,13 @@ GM.configuracion();
   }
   else{
   A.camActive=false;}
+  } else {
+    println("Camaras Desconectadas");
+    }
   }
  } 
  
-  if(escenario==10){
-   M.generar();
-  }
+ 
     
       
        

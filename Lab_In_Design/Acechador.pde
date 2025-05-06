@@ -84,7 +84,7 @@ class acechador {
     }
     if(camarasCerradas){ A.camActive=false;}
     
-    /*println("Tiempo= " + moveTime);
+   /* println("Tiempo= " + moveTime);
     println("Posición= " + posAct);
     println("Probabilidad= " + probAvance);
     println("Cámara Activa= " + camActive);*/
@@ -95,8 +95,9 @@ class acechador {
     } else { 
     finality=0;
     }
-    //println(finality);
+    //println("Jumpscare se acerca  "+finality);
     if(finality>=4){
+      JS.acechadorJumpscare=true;
       JS.acechadorJS();
     }
     

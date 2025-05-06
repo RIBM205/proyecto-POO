@@ -1,4 +1,4 @@
-PImage mapaLab,cafetera;
+PImage mapaLab,cafetera,valvula;
 
 class GameManager{
 
@@ -43,13 +43,17 @@ slime=loadImage("Enemigos/Slime.png");
 mapaLab=loadImage("MapaLaboratorio.jpg");
 //////////////////////Assets Laboratorio//////////////////////////////////////////
 cafetera=loadImage("Assets/Cafetera.png");
+
   }
   void configuracion(){
   if(ActiveMenu==true)
   MM.MainMenu();
-if(pausa==true)
+  
+  if(pausa==true){
   MM.PausaMenu();
-
+  MM.mapa();
+  }
+  
     if(ActiveMenu==false&&pausa==false){
       enPartida=true;
     } else {
@@ -80,6 +84,20 @@ if(pausa==true)
     P.panelAbierto=false;
     S.espera=0;
     PL.palancaY=250;
+    JS.slimeJumpscare=false;
+    JS.merodeadorJumpscare=false;
+    JS.acechadorJumpscare=false;
+    camarasDesconectadas=false;
+    lucesDesconectadas=false;
+    ventilacionFallando=false;
+    estres=0;
+    cafe.enCafetera=false;
+    cafe.granosRestantes=3;
+    cafe.tiempoLlenado=0;
+    cafe.cafeListo=false;
+    enMapa=false;
+
+    
     } //Fin de la Funcion Reset
 
 

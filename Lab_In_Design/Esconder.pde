@@ -1,4 +1,4 @@
-
+  
 
 class hide{ //Para todos los "botones" o zonas para esconerse
 int x,y,t;
@@ -95,7 +95,7 @@ class ventilacion{
     rect(0,0,width,height);
     fill(200,0,0,30);
     square(abrirX,abrirY,abrirT);
-    EST.aumentar();
+   
     }
     
     }
