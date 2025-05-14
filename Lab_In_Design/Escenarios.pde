@@ -49,7 +49,7 @@ void escenarios(){
            dd.dibujar();
              V.dibujar();
              S.ventilacionActual=0;
-            
+            Plan.generar();
        }
        break;
        
@@ -58,6 +58,9 @@ void escenarios(){
          descaleras.dibujar();
          dPasilloSec.dibujar();
           db.dibujar();
+          
+         if(noches.nocheActual==2) 
+          WithUs.generar();
       }
       break; 
       case 2:{
@@ -76,6 +79,7 @@ void escenarios(){
        darriba.dibujar();
        dabajo.dibujar();
        db.dibujar();
+       LabStory.generar();
        }
       break;
       
@@ -98,6 +102,7 @@ void escenarios(){
       bajar.dibujar();
       cafe.dibujar();
       cafe.tomarCafe();   
+      LibroS.generar();
       }
       break;
         case 7:{
@@ -105,6 +110,7 @@ void escenarios(){
        db.dibujar();
        V.dibujar();
        S.ventilacionActual=2;
+       LabStory.generar();
       }
       break;
       
@@ -113,6 +119,11 @@ void escenarios(){
       db.dibujar();
       P.dibujar();
       PL.dibujar();
+      if(noches.nocheActual==2)
+      Despido.generar();
+      
+      if(noches.nocheActual==4)
+      CartaDoc.generar();
       }
       break;
       
@@ -122,19 +133,29 @@ void escenarios(){
       hs.esconder();
         V.dibujar();
          S.ventilacionActual=3;
-         cafe.recogerGranos();
+         VLV.dibujar();
+         Observa.generar();
       }
       break;
       
       case 10:{
       image(laboratorio1,0,0,width,height);
       db.dibujar();
+      cafe.recogerGranos();
+      
+      if(noches.nocheActual==3)
+      PPiel.generar();
+      
       }
       break;
       
       case 11:{
       image(laboratorio2,0,0,width,height);
       db.dibujar();
+      
+      if(noches.nocheActual==4)
+      VecinosP.generar();
+      
       } 
       break;
       
@@ -143,28 +164,50 @@ void escenarios(){
       db.dibujar();
         V.dibujar();
         S.ventilacionActual=1;
+        
+        if(noches.nocheActual==2)
+        ProwlerRep.generar();
+        
+        if(noches.nocheActual==5)
+          Will.generar();
+          
+         if(noches.nocheActual==3)
+         ProgressM.generar();
       }
       break;
       
       case 13:{
       image(laboratorio4,0,0,width,height);
       db.dibujar();
+      
+        if(noches.nocheActual==1)
+          OrdenA.generar();
+          
       }
       break;
       
       case 14:{
       image(laboratorio5,0,0,width,height);
       db.dibujar();
+     if(noches.nocheActual==3)
+      WOW.generar();
+      
+      if(noches.nocheActual==4)
+      PPensar.generar();
+      
+    
       }
       break;
       
       case 15:{
       image(laboratorio6,0,0,width,height);
       db.dibujar();
+      LabStory.generar();
       }
       break;
       
     }//FIN DEL SWITCH
+
 
   
 }

@@ -1,4 +1,8 @@
 PImage mapaLab,cafetera,valvula;
+PImage Angerona;
+PImage planeta,poema;
+PImage proyectoAngerona;
+PImage MundoCruel;
 
 class GameManager{
 
@@ -36,15 +40,50 @@ eLab=loadImage("EscLab.jpg");
 eSot=loadImage("EscSot.jpg");
 
 //////////////////
-acechador = loadImage("AcechadorP.png");
+acechador = loadImage("Enemigos/Acechador.png");
 merodeador = loadImage("Enemigos/Merodeador.png");
 slime=loadImage("Enemigos/Slime.png");
+Angerona=loadImage("Enemigos/Angerona.png");
 //////////////////////Menus/////////////////////////////////////
 mapaLab=loadImage("MapaLaboratorio.jpg");
 //////////////////////Assets Laboratorio//////////////////////////////////////////
 cafetera=loadImage("Assets/Cafetera.png");
+valvula=loadImage("Assets/Valvula.png");
 
+/////////////////////Assets Historia ///////////////////////////////
+wow=loadImage("Assets/Historia/WOW.png");
+Planeta=loadImage("Assets/Historia/Planeta.png");
+Libro_Leyenda=loadImage("Assets/Historia/LibroLeyendaSlime.png");
+cartaDoctor=loadImage("Assets/Historia/CartaAlDoctor.png");
+merodeadorReporte=loadImage("Assets/Historia/ReporteMerodeador.png");
+huyeTexto=loadImage("Assets/Historia/Huye.png");
+acechadorTexto=loadImage("Assets/Historia/NoValeLaPena.png");
+cartaDespido=loadImage("Assets/Historia/CartaDespido.png");
+proyectAngerona1=loadImage("Assets/Historia/Angerona1.png");
+proyectAngerona2=loadImage("Assets/Historia/Angerona2.png");
+proyectAngerona3=loadImage("Assets/Historia/Angerona3.png");
+cuentaEncuesta=loadImage("Assets/Historia/Cuenta.jpg");
+listoEncuesta=loadImage("Assets/Historia/Listo.jpg");
+silencioEncuesta=loadImage("Assets/Historia/Silencio.jpg");
+cartaIl=loadImage("Assets/Historia/IlegibleCarta.png");
+postIl=loadImage("Assets/Historia/PostIlegible.png");
+papelIl=loadImage("Assets/Historia/Ilegible.png");
+libroCerrado=loadImage("Assets/Historia/LibroCerrado.png");
+postPensar=loadImage("Assets/Historia/PuedePensar.png");
+postPiel=loadImage("Assets/Historia/Piel.png");
+puedeVerme=loadImage("Assets/Historia/MeObserva.jpg");
+mapaPlan=loadImage("Assets/Historia/MapaPlan.png");
+voluntad=loadImage("Assets/Historia/Voluntad.png");
+entreNosotros=loadImage("Assets/Historia/EntreNosotros.png"); 
+planeta=loadImage("Assets/Planeta.png");
+vecinos=loadImage("Assets/Historia/Vecinos.png"); //Escenario  11   Noche 4
+progresoM=loadImage("Assets/Historia/PapelProgreso.png"); //Escenario  12   Noche  3
+ordenArresto=loadImage("Assets/Historia/OrdenArresto.png"); //Escenario  14   Noche  1
+poema=loadImage("Assets/Historia/Poema.jpg");
+MundoCruel=loadImage("Assets/Historia/CruelMundo.png");
+proyectoAngerona=loadImage("Assets/Historia/ProyectoAngerona.png");
   }
+  
   void configuracion(){
   if(ActiveMenu==true)
   MM.MainMenu();
@@ -62,7 +101,7 @@ cafetera=loadImage("Assets/Cafetera.png");
       }
     }
     
-    if(hidden==-1&&V.conductosActivos==0&&camarasCerradas==true&&PL.enPalanca==false&&P.panelAbierto==false){
+    if(hidden==-1&&V.conductosActivos==0&&camarasCerradas==true&&PL.enPalanca==false&&P.panelAbierto==false&&!noches.enTransicion&&!inspeccionando){
       normalSetup=true;} 
       else {
       normalSetup=false;}
@@ -96,7 +135,7 @@ cafetera=loadImage("Assets/Cafetera.png");
     cafe.tiempoLlenado=0;
     cafe.cafeListo=false;
     enMapa=false;
-
+   inspeccionando=false;
     
     } //Fin de la Funcion Reset
 

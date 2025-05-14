@@ -4,6 +4,7 @@ PImage cam0,cam1,cam2,bosque;             //Se declaran las diferentes variables
 PImage eSot,eOfi,eLab;     
 int camara,hidden=-1; 
 boolean camarasCerradas=true; //Usado para saber si las camaras estan activas o no.
+
 SoundFile pasos;
 boolean pasosS=false;
 
@@ -24,14 +25,33 @@ void setup(){
 void draw(){
 background(0,0);
 GM.configuracion();
+
+//println(noches.nocheActual);
  //println(S.espera);
  //println(noches.tiempoJugado);
+println(pausa);
+ 
+       
+         if(LabStory.noElegido){
+               LabStory.opcionNo();
+               return;}
+               
+                 if(LabStory.siElegido){
+               LabStory.opcionSi();
+               return;}
+
+ 
+ //println(noches.enTransicion);
+ //println("XDDDDD  "+noches.tiempoTransicion);
  
   noches.enPausa(); 
-  println(estres);
+  
+  
+  //println(estres);
 
 
   if(enPartida==true){
+    noches.configuracionNoches();
     A.avanzar();
     escenarios();
     A.scare();
@@ -45,6 +65,22 @@ GM.configuracion();
     M.caceria();
     cafe.llenar();
     EST.dificultad();
+   LabStory.opcionesEncuesta();
+    
+    
+    
+    if(noches.enTransicion){
+      noches.transicionInicial();
+    return;
+    }
+    
+    if (noches.entransicionFinal) {
+        noches.transicionFinal();
+        return;
+      }
+     
+  
+    
     
     if(cerrado&&estres<=100){
      EST.aumentar();
@@ -62,7 +98,7 @@ GM.configuracion();
   A.camActive=true;
   A.generar();
   A.posicion();//Camara 3
-  I.dibujar();
+  A.iluminar();
   }
   else{
   A.camActive=false;}

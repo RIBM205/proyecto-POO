@@ -98,6 +98,7 @@ class Enemy {
     }
    } else if(enPersecucion&&jugadorHuyo){
      delay++;
+     finality=0;
      
      if(delay>tiempoMaximo){
      
@@ -110,4 +111,4 @@ class Enemy {
   }
 
 
-Enemy M= new Enemy(10,10);
+Enemy M= new Enemy(10,12);

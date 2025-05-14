@@ -30,6 +30,7 @@ boolean panelAbierto;
     }
    
 }   
+
 class Palanca extends Estres{
   int x,y;
   float palancaX,palancaY;
@@ -124,6 +125,54 @@ float radio = 75;
         
 }
 
+class Valvula{
+  float x,y;
+  float angulo;
+  boolean enMinijuego;
+  int  cerrarX;
+   int cerrarY;
+  
+  void dibujar(){
+    if(!enMinijuego){
+      fill(120,0,0,50);
+      square(x,y,125);
+    } else {
+      pushMatrix();
+      translate(x,y);
+      rotate(radians(angulo));
+      imageMode(CENTER);
+      image(valvula,0,0,500,500);
+      imageMode(CORNER);
+      popMatrix();
+       cerrar();
+       reinicio();
+    }
+  }
+  void cerrar(){
+   if(enMinijuego){ 
+    fill(#B90404);
+    square(cerrarX,cerrarY,50);
+    }
+  }
+     void reinicio(){
+      if(angulo>=2000){
+        if(ventilacionFallando){
+          ventilacionFallando=false;
+        }
+      }
+    
+    }
+  
+  Valvula(){
+    x=width*6.3;
+    y=height*4.7;
+    cerrarX=width;
+    cerrarY=height;
+  }
+  
+}
+
+Valvula VLV= new Valvula();
 Panel P=new Panel();
 Cables C[]= new Cables[n];
 Palanca PL= new Palanca();

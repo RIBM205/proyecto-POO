@@ -1,5 +1,6 @@
-    float estres;
+    float estres,aumentoEstres;
     boolean camarasDesconectadas,lucesDesconectadas,ventilacionFallando;
+    
 class Estres{
 
     int probabilidadFallo;
@@ -8,7 +9,7 @@ class Estres{
     
     void aumentar(){
     if(cerrado==true);
-      estres+=0.05;
+      estres+=aumentoEstres;
      
       println(probabilidadFallo);
       
@@ -17,12 +18,16 @@ class Estres{
     void dificultad(){
       if (estres >= 90) {
         probabilidadFallo = 85;
+        
       } else if (estres >= 70) {
         probabilidadFallo = 60;
+        
       } else if (estres >= 50) {
         probabilidadFallo = 30;
+        
       } else if (estres >= 20) {
         probabilidadFallo = 10;
+        
       } else {
         probabilidadFallo = 2;
       }
@@ -73,6 +78,7 @@ float bolsaX,bolsaY;
     } else {
     image(cafetera,width/4,height/3,700,500);
     fill(#794831);
+    
     if(granosRestantes>0)
     square(granosX,granosY,50);
       

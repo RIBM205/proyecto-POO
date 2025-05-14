@@ -1,14 +1,11 @@
-class iluminar{
-    int ex=width,ey=height,et=50;
-      void dibujar(){
-     if(A.posAct==3){
-      fill(220,200,0);
-      square(ex,ey,et);
-      }
-    }
-}
+
   PImage acechador;
     PImage merodeador;
+    
+    int probabilidadAcechadorMenor,probabilidadAcechadorMayor;
+    float tiempoAcechadorMenor,tiempoAcechadorMayor;
+    int oportunidadAcechador;
+    int TiempoA;
     
 class acechador {
   
@@ -20,6 +17,7 @@ class acechador {
   float tiempoAvance;
   int probAvance;
   float finality;
+  int ex=width,ey=height,et=50;
   
   void generar() {
 
@@ -61,17 +59,17 @@ class acechador {
 
   void avanzar() {
     if (camActive) {
-      tiempoAvance = 0.02;
-      probAvance = 30;
+      tiempoAvance = tiempoAcechadorMenor;
+      probAvance = probabilidadAcechadorMenor;
     } else {
-      tiempoAvance = 0.06;
-      probAvance = 70;
+      tiempoAvance = tiempoAcechadorMayor;
+      probAvance = probabilidadAcechadorMayor;
     }
 
     moveTime += tiempoAvance;
 
-    if (moveTime >= 5) {
-      int momentum = int(random(100));
+    if (moveTime >= TiempoA) {
+      int momentum = int(random(100)); 
 
       if ((momentum < probAvance) && (posAct < 4)) {
         posAct++;
@@ -96,16 +94,22 @@ class acechador {
     finality=0;
     }
     //println("Jumpscare se acerca  "+finality);
-    if(finality>=4){
+    if(finality>=oportunidadAcechador){
       JS.acechadorJumpscare=true;
       JS.acechadorJS();
     }
     
     
   }
+   void iluminar(){
+     if(posAct==3){
+      fill(220,200,0);
+      square(ex,ey,et);
+      }
+    }
   
 } // Fin de la clase
 
 
-iluminar I= new iluminar();
+
 acechador A = new acechador();
