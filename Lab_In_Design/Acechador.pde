@@ -21,7 +21,7 @@ class acechador {
   
   void generar() {
 
-    if (camara == 3) {
+    if (camara == 10) {
       image(acechador, x, y, wd, ht);
     }
   }
@@ -80,9 +80,9 @@ class acechador {
       
       moveTime = 0; 
     }
-    if(camarasCerradas){ A.camActive=false;}
+    if(camarasCerradas || camara!=10){ A.camActive=false;}
     
-   /* println("Tiempo= " + moveTime);
+    /*println("Tiempo= " + moveTime);
     println("Posición= " + posAct);
     println("Probabilidad= " + probAvance);
     println("Cámara Activa= " + camActive);*/

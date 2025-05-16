@@ -7,39 +7,55 @@ class Estres{
     float tiempoComprobacion;
     int tiempoMaximo=1200;
     
+    boolean coolDown;
+    int tiempoCooldown=6000;
+    int contadorCooldown;
+    
     void aumentar(){
-    if(cerrado==true);
+    if(cerrado==true){
       estres+=aumentoEstres;
+      }
      
-      println(probabilidadFallo);
+     
       
     }
     
     void dificultad(){
       if (estres >= 90) {
-        probabilidadFallo = 85;
+        probabilidadFallo = 70;
         
       } else if (estres >= 70) {
-        probabilidadFallo = 60;
+        probabilidadFallo = 50;
         
       } else if (estres >= 50) {
-        probabilidadFallo = 30;
+        probabilidadFallo = 20;
         
       } else if (estres >= 20) {
         probabilidadFallo = 10;
         
       } else {
-        probabilidadFallo = 2;
+        probabilidadFallo = 0;
       }
       
     if(enPartida){
       tiempoComprobacion++;
-     if(tiempoComprobacion>=tiempoMaximo){
+      
+      if(coolDown){
+        contadorCooldown++;
+      }
+      
+      if(contadorCooldown>=tiempoCooldown){
+        coolDown=false;
+        contadorCooldown=0;
+      }
+     
+     if(tiempoComprobacion>=tiempoMaximo && !coolDown){
        int fallo=(int(random(100)));
+       println("Probabilidad de Fallo  "+fallo);
        
        if(fallo<probabilidadFallo){
          int sistemaFallo=int(random(3));
-         
+         println("Fallo El Sistema  "+sistemaFallo);
            switch(sistemaFallo){
              case 0: camarasDesconectadas=true;
              break;
@@ -48,6 +64,7 @@ class Estres{
              case 2: ventilacionFallando=true;
              break;
            } //Fin del Switch
+           coolDown=true;
          }
          tiempoComprobacion=0;
        }  

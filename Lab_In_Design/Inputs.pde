@@ -10,17 +10,6 @@ void keyPressed(){
     if(key=='e'||key=='E'){
     camarasCerradas=!camarasCerradas;
     }
-    if(camarasCerradas==false){
-        if(key=='1'){ //Por ahora, pongo que el cambio de camaras sea con numeros. Si al final resulta que son muchas camaras, tal vez sea mejorcambiarla mediante un pequeño mapa mostrado al abrir las camaras y dar clic, o con las flechas.
-          camara=1;
-        }
-        if(key=='2'){
-        camara=2;
-        }
-         if(key=='3'){
-        camara=3;
-        }
-      }
   }
   
   if(enPartida){
@@ -32,7 +21,7 @@ void keyPressed(){
 }
 
 void mouseDragged() {
-  if (!PL.activada) {
+  if (!PL.activada && PL.enPalanca) {
     if (dist(mouseX, mouseY, PL.x * 1.25, PL.y * 0.9) < 25) {
       PL.bajando = true;
     }
@@ -42,7 +31,7 @@ void mouseDragged() {
     }
   }
     if(escenario==9&&VLV.enMinijuego&&VLV.angulo<=2000){
-      VLV.angulo+=0.5;
+      VLV.angulo+=5;
   }
 }
 
@@ -230,7 +219,7 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
     }
   }//Sin Camaras, Ni Menu, ni escondido
           if(enPartida==true){
-            if(camara==3&&mouseX > A.ex && mouseY > A.ey && mouseX < A.ex + A.et && mouseY < A.ey + A.et)
+            if(camara==10&&mouseX > A.ex && mouseY > A.ey && mouseX < A.ex + A.et && mouseY < A.ey + A.et)
             A.posAct=int(random(2));
             
            if(V.conductosActivos==1){
@@ -401,16 +390,72 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
          } //En Partida
          
          if(encuestaActiva){
+              if(!mostrandoResultado){           
              if(mouseX>LabStory.siX&&mouseY>LabStory.siY&&mouseX<LabStory.siX+430&&mouseY<LabStory.siY+180){
                LabStory.siElegido=true;
                  LabStory.noElegido=false;
+                 mostrandoResultado=true;
+                 empiezaTiempo=true;
+                 
              
              }
              if(mouseX>LabStory.noX&&mouseY>LabStory.noY&&mouseX<LabStory.noX+430&&mouseY<LabStory.noY+180){
                 LabStory.noElegido=true;
                   LabStory.siElegido=false;
-              
+                    mostrandoResultado=true;
+                    empiezaTiempo=true;
+                   
              }  
+            }
+            if(tiempoCumplido && mouseX>LabStory.continuarX&&mouseY>LabStory.continuarY&&mouseX<LabStory.continuarX+100&&mouseY<LabStory.continuarY+100){
+                encuestaActiva=false;
+                LabStory.noElegido=false;
+                  LabStory.siElegido=false;
+                  LabStory.silencioPanel=false;
+                  LabStory.cuentaPanel=false;
+                  LabStory.listoPanel=false;
+                  mostrandoResultado=false;
+                  tiempoCumplido=false;
+                  empiezaTiempo=false;
+                  tiempoPanel=0;
+                  noches.FinDeNoche();
+                  
+            }
+         }
+         
+         if(enPartida){ ///////////////////////////// CAMARAS ////////////////////////////////////
+           if(!camarasCerradas && !camarasDesconectadas){
+             if(mouseX>CAM0.x&&mouseY>CAM0.y&&mouseX<CAM0.x+CAM0.w&&mouseY<CAM0.y+CAM0.h){
+               camara=0;
+             }
+              if(mouseX>CAM2.x&&mouseY>CAM2.y&&mouseX<CAM2.x+CAM2.w&&mouseY<CAM2.y+CAM2.h){
+               camara=2;
+             }
+              if(mouseX>CAM3.x&&mouseY>CAM3.y&&mouseX<CAM3.x+CAM3.w&&mouseY<CAM3.y+CAM3.h){
+               camara=3;
+             }
+              if(mouseX>CAM4.x&&mouseY>CAM4.y&&mouseX<CAM4.x+CAM4.w&&mouseY<CAM4.y+CAM4.h){
+               camara=4;
+             }
+              if(mouseX>CAM5.x&&mouseY>CAM5.y&&mouseX<CAM5.x+CAM5.w&&mouseY<CAM5.y+CAM5.h){
+               camara=5;
+             }
+              if(mouseX>CAM6.x&&mouseY>CAM6.y&&mouseX<CAM6.x+CAM6.w&&mouseY<CAM6.y+CAM6.h){
+               camara=6;
+             }
+              if(mouseX>CAM7.x&&mouseY>CAM7.y&&mouseX<CAM7.x+CAM0.w&&mouseY<CAM7.y+CAM7.h){
+               camara=7;
+             }
+              if(mouseX>CAM8.x&&mouseY>CAM8.y&&mouseX<CAM8.x+CAM8.w&&mouseY<CAM8.y+CAM8.h){
+               camara=8;
+             }
+              if(mouseX>CAM9.x&&mouseY>CAM9.y&&mouseX<CAM9.x+CAM9.w&&mouseY<CAM9.y+CAM9.h){
+               camara=9;
+             }
+              if(mouseX>CAM10.x&&mouseY>CAM10.y&&mouseX<CAM10.x+CAM10.w&&mouseY<CAM10.y+CAM10.h){
+               camara=10;
+             }
+           }
          }
              
 }//Fin de la funcion

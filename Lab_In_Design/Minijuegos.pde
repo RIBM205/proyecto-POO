@@ -1,6 +1,4 @@
 
-
-
 class Panel{
 int x,y;
 boolean panelAbierto;
@@ -83,6 +81,7 @@ class Palanca extends Estres{
        void reiniciar(){
        if(camarasDesconectadas){
          camarasDesconectadas=false;
+         estres-=10;
          }
        }
 }
@@ -158,6 +157,7 @@ class Valvula{
       if(angulo>=2000){
         if(ventilacionFallando){
           ventilacionFallando=false;
+          estres-=10;
         }
       }
     

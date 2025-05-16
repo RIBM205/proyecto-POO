@@ -3,24 +3,37 @@ PImage Angerona;
 PImage planeta,poema;
 PImage proyectoAngerona;
 PImage MundoCruel;
+PImage mapaCam,noCam;
+
 
 class GameManager{
 
   void llamar(){
-  cam1=loadImage("Camara1.jpg");
-cam2=loadImage("Camara2.jpg");
-bosque=loadImage("Bosque.jpg"); 
-cam0=loadImage("Camara0.jpg");
+  cam0=loadImage("Cam0.jpg");
+  
+cam2=loadImage("Cam2.jpg");
+cam3=loadImage("Cam3.png");
+cam4=loadImage("Cam4.png");
+cam5=loadImage("Cam5.png");
+cam6=loadImage("Cam6.png");
+cam7=loadImage("Cam7.png");
+cam8=loadImage("Cam8.png");
+cam9=loadImage("Cam9.png");
+cam10=loadImage("Cam10.jpg");
+
+
+noCam=loadImage("noCams.jpg");
+mapaCam=loadImage("MapaCamaras.png");
 //Escenarios
-recepcion=loadImage("Recepcion.jpg"); //0
+recepcion=loadImage("Recepcion.png"); //0
 mainHall=loadImage("PasilloEntrada.jpg"); //1
-pasilloSecundario=loadImage("pasilloSec.jpg"); //2
-stairs=loadImage("Escaleras_PB.png");        //3
-oficina=loadImage("Oficina.jpg");         //2
+pasilloSecundario=loadImage("pasilloSec.png"); //2
+stairs=loadImage("EscalerasPB.png");        //3
+oficina=loadImage("SalaMandos.png");         //2
 twoHall=loadImage("PasilloDerecha.jpg");  //3
 cleaning=loadImage("cleaning.jpg");       //4
 twoLab=loadImage("escena2.jpg");          //5
-stairsS=loadImage("stairsSotano.jpg");    //6.1
+stairsS=loadImage("EscalerasSotano.png");    //6.1
 stairsR=loadImage("Escaleras_PA.png");      //6.2
 restRoom=loadImage("Sala.png");            //7
 sotano=loadImage("Sotano.png");           //9
@@ -108,6 +121,8 @@ proyectoAngerona=loadImage("Assets/Historia/ProyectoAngerona.png");
   } //Fin de la funcion configuracion
   
     void reset(){
+    camarasCerradas=true;
+    hidden=-1;
     escenario=0;
     camara=1;
     A.posAct=0;
@@ -123,6 +138,9 @@ proyectoAngerona=loadImage("Assets/Historia/ProyectoAngerona.png");
     P.panelAbierto=false;
     S.espera=0;
     PL.palancaY=250;
+    PL.bajando=false;
+    PL.activada=false;
+    PL.tiempoActivada=0;
     JS.slimeJumpscare=false;
     JS.merodeadorJumpscare=false;
     JS.acechadorJumpscare=false;
@@ -134,8 +152,22 @@ proyectoAngerona=loadImage("Assets/Historia/ProyectoAngerona.png");
     cafe.granosRestantes=3;
     cafe.tiempoLlenado=0;
     cafe.cafeListo=false;
+    cafe.llenando=false;
     enMapa=false;
    inspeccionando=false;
+   camarasDesconectadas=false;
+   lucesDesconectadas=false;
+   ventilacionFallando=false;
+   EST.tiempoComprobacion=0;
+   EST.contadorCooldown=0;
+   EST.coolDown=false;
+   VLV.enMinijuego=false;
+   VLV.angulo=0;
+   LabStory.alucinando=false;
+   M.nodoActual=12;
+   M.movimiento=0;
+   
+   
     
     } //Fin de la Funcion Reset
 

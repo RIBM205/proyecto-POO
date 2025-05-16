@@ -19,6 +19,10 @@ PImage silencioEncuesta,cuentaEncuesta,listoEncuesta;
     boolean encuestaActiva;
     boolean activarEncuesta;
     boolean puedeEncuesta;
+    boolean mostrandoResultado;
+    boolean tiempoCumplido;
+    boolean empiezaTiempo;
+    int tiempoPanel=0;  
     
 
 class Lab_Mysteries extends Estres{
@@ -36,6 +40,7 @@ class Lab_Mysteries extends Estres{
     int siX,siY;
     int noX,noY;
     int x,y;
+    int continuarX,continuarY;
     
     boolean listoPanel,silencioPanel,cuentaPanel;
     
@@ -218,7 +223,7 @@ class Lab_Mysteries extends Estres{
         int generacion=int(random(100));
          println(generacion);
         
-      if(generacion<20){
+      if(generacion<99){
         int panel=int(random(3));
         encuestaActiva=true;
         
@@ -262,7 +267,23 @@ class Lab_Mysteries extends Estres{
 
       }
       
+      
+      
+      void tiempoEncuesta(){
+       
+        
+        if(tiempoPanel>=180){
+          tiempoCumplido=true;
+        }
+        
+      
+          
+        
+      
+      }
+      
       void opcionSi(){
+        
         if(silencioPanel){
            image(proyectoAngerona,0,0,width/2,height);
         }
@@ -272,13 +293,17 @@ class Lab_Mysteries extends Estres{
          if(listoPanel){ 
           image(MundoCruel,0,0,width/2,height);
         }
+            if (tiempoCumplido && empiezaTiempo) {
+              fill(150, 0, 0);
+              square(LabStory.continuarX, LabStory.continuarY, 100);
+          }
       }
       
       int trs;
 
 
        void opcionNo(){
-        
+ 
          if(silencioPanel){
           image(Angerona,x,y,width,height);
           x=int(random(-100,100));
@@ -291,25 +316,45 @@ class Lab_Mysteries extends Estres{
            image(planeta,0,0,width,height); 
            trs--;
         }
+               if (tiempoCumplido && empiezaTiempo) {
+              fill(150, 0, 0);
+              square(LabStory.continuarX, LabStory.continuarY, 100);
+          }
       
      } 
     
     
+    boolean alucinando;
+    int alucinacion;
     
     void glitch(){
       if(estres>=90){
-        probAlucinacion=70;
+        probAlucinacion=40;
         
       } else if(estres>=70){;
-        probAlucinacion=50;
+        probAlucinacion=30;
         
       } else if(estres>=30){
-        probAlucinacion=30;
+        probAlucinacion=20;
       
       }  else if(estres>=10){
         probAlucinacion=10;
       }  else if(estres<9){
         probAlucinacion=0;
+      }
+      
+      if(!camarasCerradas && !alucinando){
+        alucinando=true;
+        
+        int material=int(random(100));
+        
+        if(material<probAlucinacion){
+           
+        
+        } else {
+          alucinando=false;
+        }
+        
       }
       
       
@@ -327,6 +372,9 @@ class Lab_Mysteries extends Estres{
         
         noX=width*6+50;
         noY=height*4;
+        
+        continuarX=width*11;
+        continuarY=0;
     }
 
 }

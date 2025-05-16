@@ -136,6 +136,33 @@ void enPausa() {
     switch(nocheActual){
     case 1:  { ////////////////////////////////////////////////////////////////////////////////NOCHE 1
     //Dificultad del Acechador
+     probabilidadAcechadorMenor=30; //Probabilidad de Avanzar cuando esta siendo observado
+    tiempoAcechadorMenor=0.01;        //Tiempo de Avanzar cuando las camaras esta siendo observado
+    
+    probabilidadAcechadorMayor=60;     //Probabilidad de avanzar con las camaras cerradas
+    tiempoAcechadorMayor=0.04;         //Tiempo de avanzar con las camaras cerradas
+    
+    oportunidadAcechador=540;         //El tiempo que tiene el jugador para regresar al acechador en su ultima posicion
+    TiempoA=600;                      //El tiempo en el que el acechador comprobara si puede moverse o no
+    
+    //Dificultad del Merodeador 
+    M.dificultad=2;           //Dificultad del merodeador, determina que tan constantemente se puede mover.
+    M.intervalo=420;         //El intervalo de movimientos
+    
+    //Dificultad del Slime 
+    difSlime=0;               // El tiempo que tarda en comprobar si puede aparecer o no
+        probAparecer=0;       // Probabilidad de aparecer
+    velocidadAvance=0;        //Velocidad a la que avanza el Slime una vez aparece en las ventilaciones
+    tiempoEspera=0;           //Tiempo maximo que tiene el jugador para cerrar la ventilación.
+    
+    //Aumento de la barra de estres
+    aumentoEstres=0.5;         //Que tanto aumenta el estres
+    EST.tiempoMaximo=1200;     //El tiempo con el que se comrpueba el nivel de estres para el fallo de los sistemas
+      }
+     break;
+     
+     case 2:{ ////////////////////////////////////////////////////////////////////////////////NOCHE 2
+    //Dificultad del Acechador
      probabilidadAcechadorMenor=30;
     tiempoAcechadorMenor=0.02;    
     
@@ -145,7 +172,7 @@ void enPausa() {
     oportunidadAcechador=4;
     TiempoA=5;
     //Dificultad del Merodeador DESACTIVADO EN NOCHE UNO
-    M.dificultad=10;
+    M.dificultad=0;
     M.intervalo=120;
     
     //Dificultad del Slime
@@ -157,35 +184,11 @@ void enPausa() {
     //Aumento de la barra de estres
     aumentoEstres=0.5;
     EST.tiempoMaximo=10;
-      }
-     break;
-     
-     case 2:{ ////////////////////////////////////////////////////////////////////////////////NOCHE 2
-         //Dificultad del Acechador
-     probabilidadAcechadorMenor=30;
-    tiempoAcechadorMenor=0.02;    
-    
-    probabilidadAcechadorMayor=70;
-    tiempoAcechadorMayor=0.06;
-    
-    oportunidadAcechador=4;
-    //Dificultad del Merodeador
-    M.dificultad=10;
-    M.intervalo=120;
-    
-    //Dificultad del Slime
-    difSlime=10;
-    probAparecer=90;
-    velocidadAvance=10;
-    tiempoEspera=20;
-    
-    //Aumento de la barra de estres
-    aumentoEstres=0.5;
      }
      break;
      
       case 3:{ ////////////////////////////////////////////////////////////////////////////////NOCHE 3
-         //Dificultad del Acechador
+  //Dificultad del Acechador
      probabilidadAcechadorMenor=30;
     tiempoAcechadorMenor=0.02;    
     
@@ -193,8 +196,9 @@ void enPausa() {
     tiempoAcechadorMayor=0.06;
     
     oportunidadAcechador=4;
-    //Dificultad del Merodeador
-    M.dificultad=10;
+    TiempoA=5;
+    //Dificultad del Merodeador DESACTIVADO EN NOCHE UNO
+    M.dificultad=0;
     M.intervalo=120;
     
     //Dificultad del Slime
@@ -205,11 +209,12 @@ void enPausa() {
     
     //Aumento de la barra de estres
     aumentoEstres=0.5;
+    EST.tiempoMaximo=10;
      }
      break;
      
       case 4:{ ////////////////////////////////////////////////////////////////////////////////NOCHE 4
-         //Dificultad del Acechador
+  //Dificultad del Acechador
      probabilidadAcechadorMenor=30;
     tiempoAcechadorMenor=0.02;    
     
@@ -217,8 +222,9 @@ void enPausa() {
     tiempoAcechadorMayor=0.06;
     
     oportunidadAcechador=4;
-    //Dificultad del Merodeador
-    M.dificultad=10;
+    TiempoA=5;
+    //Dificultad del Merodeador DESACTIVADO EN NOCHE UNO
+    M.dificultad=0;
     M.intervalo=120;
     
     //Dificultad del Slime
@@ -229,11 +235,12 @@ void enPausa() {
     
     //Aumento de la barra de estres
     aumentoEstres=0.5;
+    EST.tiempoMaximo=10;
      }
      break;
      
       case 5:{ ////////////////////////////////////////////////////////////////////////////////NOCHE 5
-         //Dificultad del Acechador
+  //Dificultad del Acechador
      probabilidadAcechadorMenor=30;
     tiempoAcechadorMenor=0.02;    
     
@@ -241,8 +248,9 @@ void enPausa() {
     tiempoAcechadorMayor=0.06;
     
     oportunidadAcechador=4;
-    //Dificultad del Merodeador
-    M.dificultad=10;
+    TiempoA=5;
+    //Dificultad del Merodeador DESACTIVADO EN NOCHE UNO
+    M.dificultad=0;
     M.intervalo=120;
     
     //Dificultad del Slime
@@ -253,6 +261,7 @@ void enPausa() {
     
     //Aumento de la barra de estres
     aumentoEstres=0.5;
+    EST.tiempoMaximo=10;
      }
      break;
      

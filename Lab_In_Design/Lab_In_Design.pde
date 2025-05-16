@@ -5,7 +5,7 @@ PImage eSot,eOfi,eLab;
 int camara,hidden=-1; 
 boolean camarasCerradas=true; //Usado para saber si las camaras estan activas o no.
 
-SoundFile pasos;
+SoundFile pasos,mainMenu;
 boolean pasosS=false;
 
 void setup(){
@@ -20,17 +20,25 @@ void setup(){
   
   //Sonidos//
   pasos = new SoundFile(this,"Audio/pasos.mp3");
+  mainMenu= new SoundFile(this,"AñosAtras.mp3");
 }
 
 void draw(){
 background(0,0);
 GM.configuracion();
 
-//println(noches.nocheActual);
- //println(S.espera);
- //println(noches.tiempoJugado);
-println(pausa);
- 
+    //println(noches.nocheActual);
+   //println(S.espera);
+   //println(noches.tiempoJugado);
+    //println(pausa);
+    //println(tiempoPanel);
+  //  println(empiezaTiempo);
+  println(estres);
+   
+    if (empiezaTiempo) {
+                  tiempoPanel++;
+                   LabStory.tiempoEncuesta();  
+            }
        
          if(LabStory.noElegido){
                LabStory.opcionNo();
@@ -39,7 +47,10 @@ println(pausa);
                  if(LabStory.siElegido){
                LabStory.opcionSi();
                return;}
-
+               
+         
+               
+              
  
  //println(noches.enTransicion);
  //println("XDDDDD  "+noches.tiempoTransicion);
@@ -66,7 +77,9 @@ println(pausa);
     cafe.llenar();
     EST.dificultad();
    LabStory.opcionesEncuesta();
-    
+  
+   numeracion();
+     mostrar();
     
     
     if(noches.enTransicion){
@@ -86,26 +99,7 @@ println(pausa);
      EST.aumentar();
    }
 
- if(camarasCerradas==false){
-   if(!camarasDesconectadas){
-  image(cam1,0,0,width,height); // Se abre a camara 1
-  
-  if(camara==2)
-  image(cam2,0,0,width,height); //Camara 2
-  
-  if(camara==3){ 
-  image(bosque,0,0,width,height); 
-  A.camActive=true;
-  A.generar();
-  A.posicion();//Camara 3
-  A.iluminar();
-  }
-  else{
-  A.camActive=false;}
-  } else {
-    println("Camaras Desconectadas");
-    }
-  }
+
  } 
  
  
@@ -116,6 +110,10 @@ println(pausa);
 int Tpasos;
 
 void sonidos(){
+  if(ActiveMenu&&!pasos.isPlaying()){
+    mainMenu.play();
+  }
+  
   if(pasosS==true){
     Tpasos++;
   if(!pasos.isPlaying()){ 

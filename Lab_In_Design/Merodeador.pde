@@ -11,7 +11,7 @@ class Enemy {
   boolean enPersecucion;
   int delay;
   int tiempoEspera;
-  int tiempoMaximo=120;
+  int tiempoSeguir=120;
   boolean jugadorHuyo;
   int finality;
   
@@ -91,16 +91,17 @@ class Enemy {
     tiempoEspera=0;
     finality++;
     
-    if(finality>=tiempoMaximo){
-    JS.merodeadorJS();
+    if(finality>=tiempoSeguir){
+    if(hidden!=-1){
+      JS.merodeadorJS();
     JS.merodeadorJumpscare=true;
-   
+     } 
     }
    } else if(enPersecucion&&jugadorHuyo){
      delay++;
      finality=0;
      
-     if(delay>tiempoMaximo){
+     if(delay>tiempoSeguir){
      
    }
    } 
