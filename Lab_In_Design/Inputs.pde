@@ -213,28 +213,35 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
      }
     
     /////////////////////FIN ESCENARIOS///////////////////////////////////////
-    if(!VLV.enMinijuego&&mouseX >V.x && mouseY >V.y && mouseX < V.x + V.w && mouseY <V.y +V.h){
-      if(escenario==0||escenario==9||escenario==7||escenario==12){
-    V.conductosActivos=1;}
-    }
+
   }//Sin Camaras, Ni Menu, ni escondido
           if(enPartida==true){
-            if(camara==10&&mouseX > A.ex && mouseY > A.ey && mouseX < A.ex + A.et && mouseY < A.ey + A.et)
+            if(A.posAct==3&&camara==10&&mouseX > A.ex && mouseY > A.ey && mouseX < A.ex + A.et && mouseY < A.ey + A.et)
             A.posAct=int(random(2));
+      
+            ventilacion Vactual = ventilaciones[S.ventilacionActual];
             
-           if(V.conductosActivos==1){
-             if(mouseX >V.rx && mouseY >V.ry && mouseX < V.rx + V.rw && mouseY <V.ry +V.rh){
-             V.conductosActivos=0;
-               return;}
-             if(!VLV.enMinijuego &&  mouseX >V.vx && mouseY >V.vy && mouseX < V.vx + V.vw && mouseY <V.vy +V.vh){
-               cerrado=true;
-               return;
-             }
-             if(cerrado==true&&mouseX>V.abrirX&&mouseY>V.abrirY&&mouseX<V.abrirX+V.abrirT&&mouseY<V.abrirY+V.abrirT){
-               cerrado=false;
-               return;
-             }
-           }  
+                if (!VLV.enMinijuego && mouseX > Vactual.x && mouseY > Vactual.y && mouseX < Vactual.x + Vactual.w && mouseY < Vactual.y + Vactual.h) {
+                  if (escenario == 0 || escenario == 7 || escenario == 9 || escenario == 12) {
+                    Vactual.conductosActivos = 1;
+                  }
+                }
+                
+                if (Vactual.conductosActivos == 1) {
+                  if (mouseX > Vactual.rx && mouseY > Vactual.ry && mouseX < Vactual.rx + Vactual.rw && mouseY < Vactual.ry + Vactual.rh) {
+                    Vactual.conductosActivos = 0;
+                    return;
+                  }
+                  if (!VLV.enMinijuego && mouseX > Vactual.vx && mouseY > Vactual.vy && mouseX < Vactual.vx + Vactual.vw && mouseY < Vactual.vy + Vactual.vh) {
+                    Vactual.cerrado = true;
+                    return;
+                  }
+                  if (Vactual.cerrado && mouseX > Vactual.abrirX && mouseY > Vactual.abrirY && mouseX < Vactual.abrirX + Vactual.abrirT && mouseY < Vactual.abrirY + Vactual.abrirT) {
+                    Vactual.cerrado = false;
+                    return;
+                  }
+                }  
+                
            if(escenario==8){
             if(mouseX>P.x&&mouseX<P.x+50&&mouseY>P.y&&mouseY<P.y+50&&normalSetup==true)
               P.panelAbierto=true;
@@ -258,9 +265,10 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
            }
            
            if(escenario==6){
-           if(!cafe.enCafetera){ 
+           if(!cafe.enCafetera && !inspeccionando){ 
           if(mouseX>cafe.cafeX&&mouseY>cafe.cafeY&&mouseX<cafe.cafeX+300&&mouseY<cafe.cafeY+200){
             cafe.enCafetera=true;
+            return;
           } 
         }  
         
@@ -275,12 +283,15 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
                 estres-=10;
                 cafe.cafeListo=false;   
               }  
-            } 
+            }
+            if(mouseX>cafe.cerrarX&&mouseY>cafe.cerrarY&&mouseX<cafe.cerrarX+75&&mouseY<cafe.cerrarY+75){
+              cafe.enCafetera=false;
+            }
           }
 
            
            } //Si el escenario es 6
-             if(escenario==10&&mouseX>cafe.bolsaX&&mouseY>cafe.bolsaY&&mouseX<cafe.bolsaX+50&&mouseY<cafe.bolsaY+50){
+             if(escenario==10&&mouseX>cafe.bolsaX&&mouseY>cafe.bolsaY&&mouseX<cafe.bolsaX+300&&mouseY<cafe.bolsaY+300){
               if(cafe.granosRestantes<3){
               cafe.granosRestantes++;             
              } else {
@@ -289,7 +300,7 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
              }
             }
             if(escenario==9){
-              if(!VLV.enMinijuego&&V.conductosActivos==0){
+              if(!VLV.enMinijuego&&ventilaciones[2].conductosActivos==0){
               if(mouseX>VLV.x&&mouseY>VLV.y&&mouseX<VLV.x+150&&mouseY<VLV.y+150){
                 VLV.enMinijuego=true;
               } 
@@ -325,7 +336,7 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
              inspeccionando=true;
              }
              
-             if(escenario==6&&mouseX>LibroS.assetX&&mouseY>LibroS.assetY&&mouseX<LibroS.assetX+200&&mouseY<LibroS.assetY+200){
+             if(escenario==6&&mouseX>LibroS.assetX&&mouseY>LibroS.assetY&&mouseX<LibroS.assetX+200&&mouseY<LibroS.assetY+200&&!cafe.enCafetera){
                  inspeccionando=true;
                  }
                  
@@ -428,6 +439,9 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
              if(mouseX>CAM0.x&&mouseY>CAM0.y&&mouseX<CAM0.x+CAM0.w&&mouseY<CAM0.y+CAM0.h){
                camara=0;
              }
+              if(mouseX>CAM1.x&&mouseY>CAM1.y&&mouseX<CAM1.x+CAM1.w&&mouseY<CAM1.y+CAM1.h){
+               camara=1;
+             }
               if(mouseX>CAM2.x&&mouseY>CAM2.y&&mouseX<CAM2.x+CAM2.w&&mouseY<CAM2.y+CAM2.h){
                camara=2;
              }
@@ -454,6 +468,12 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
              }
               if(mouseX>CAM10.x&&mouseY>CAM10.y&&mouseX<CAM10.x+CAM10.w&&mouseY<CAM10.y+CAM10.h){
                camara=10;
+             }
+              if(mouseX>CAM11.x&&mouseY>CAM11.y&&mouseX<CAM11.x+CAM11.w&&mouseY<CAM11.y+CAM11.h){
+               camara=11;
+             }
+              if(mouseX>CAM12.x&&mouseY>CAM12.y&&mouseX<CAM12.x+CAM12.w&&mouseY<CAM12.y+CAM12.h){
+               camara=12;
              }
            }
          }

@@ -36,6 +36,33 @@ class Noches{
      
     }   
   }
+  
+  int horas,duracionHoras;
+  int minutos;
+  int duracionMinutos;
+  
+  void reloj(){
+
+   
+   duracionMinutos= tiempoJugado/1187;
+
+  horas=21+(duracionMinutos/60);
+  minutos=duracionMinutos%60;
+  
+    if (horas >= 24) {
+      horas -= 24; 
+      }   
+    //println(horas,minutos);
+
+  }
+  
+  void mostrarReloj(){
+    if(!camarasCerradas){
+    fill(200,0,0);
+    text(nf(horas, 2) + ":" + nf(minutos, 2), 50, 50);
+    }
+  
+  }
 
 void enPausa() {
   if (pausa==true && pausado==false) {
@@ -99,6 +126,7 @@ void enPausa() {
       noStroke();
     rect(width/3.5+aumento,height/2.5,900,300);
     aumento+=10;
+   
     } else if(tiempoTransicionFinal>100){
     
       entransicionFinal=false;
@@ -137,16 +165,16 @@ void enPausa() {
     case 1:  { ////////////////////////////////////////////////////////////////////////////////NOCHE 1
     //Dificultad del Acechador
      probabilidadAcechadorMenor=30; //Probabilidad de Avanzar cuando esta siendo observado
-    tiempoAcechadorMenor=0.01;        //Tiempo de Avanzar cuando las camaras esta siendo observado
+    tiempoAcechadorMenor=0.8;        //Tiempo de Avanzar cuando las camaras esta siendo observado
     
-    probabilidadAcechadorMayor=60;     //Probabilidad de avanzar con las camaras cerradas
-    tiempoAcechadorMayor=0.04;         //Tiempo de avanzar con las camaras cerradas
+    probabilidadAcechadorMayor=50;     //Probabilidad de avanzar con las camaras cerradas
+    tiempoAcechadorMayor=1.6;         //Tiempo de avanzar con las camaras cerradas
     
     oportunidadAcechador=540;         //El tiempo que tiene el jugador para regresar al acechador en su ultima posicion
-    TiempoA=600;                      //El tiempo en el que el acechador comprobara si puede moverse o no
+    TiempoA=200;                      //El tiempo en el que el acechador comprobara si puede moverse o no
     
     //Dificultad del Merodeador 
-    M.dificultad=2;           //Dificultad del merodeador, determina que tan constantemente se puede mover.
+    M.dificultad=1;           //Dificultad del merodeador, determina que tan constantemente se puede mover.
     M.intervalo=420;         //El intervalo de movimientos
     
     //Dificultad del Slime 
@@ -156,8 +184,8 @@ void enPausa() {
     tiempoEspera=0;           //Tiempo maximo que tiene el jugador para cerrar la ventilación.
     
     //Aumento de la barra de estres
-    aumentoEstres=0.5;         //Que tanto aumenta el estres
-    EST.tiempoMaximo=1200;     //El tiempo con el que se comrpueba el nivel de estres para el fallo de los sistemas
+    aumentoEstres=0.01;         //Que tanto aumenta el estres
+    EST.tiempoMaximo=1800;     //El tiempo con el que se comrpueba el nivel de estres para el fallo de los sistemas
       }
      break;
      

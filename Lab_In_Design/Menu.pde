@@ -32,7 +32,7 @@ class Menus{
   fill(0);
   text("SALIR",470,590);
   
-  
+
   }
   
   void PausaMenu(){

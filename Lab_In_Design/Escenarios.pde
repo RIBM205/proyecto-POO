@@ -47,8 +47,12 @@ void escenarios(){
         case 0:{
          image(recepcion,0,0,width,height); //Recepcion
            dd.dibujar();
-             V.dibujar();
-             S.ventilacionActual=0;
+           
+            if(!inspeccionando) 
+              ventilaciones[0].dibujar();
+              S.ventilacionActual = 0;
+            
+           if (ventilaciones[0].conductosActivos == 0)
             Plan.generar();
        }
        break;
@@ -108,8 +112,8 @@ void escenarios(){
         case 7:{
       image(cleaning,0,0,width,height);
        db.dibujar();
-       V.dibujar();
-       S.ventilacionActual=2;
+           ventilaciones[1].dibujar();
+              S.ventilacionActual = 1;
        LabStory.generar();
       }
       break;
@@ -119,6 +123,11 @@ void escenarios(){
       db.dibujar();
       P.dibujar();
       PL.dibujar();
+     
+     if(!PL.enPalanca && !P.panelAbierto) 
+      EST.feedback();
+      
+      
       if(noches.nocheActual==2)
       Despido.generar();
       
@@ -131,8 +140,10 @@ void escenarios(){
       image(sotano,0,0,width,height); //Si estamos en este escenario, se mostrara la oppcion de esconderse para ese escenario. 
       db.dibujar();
       hs.esconder();
-        V.dibujar();
-         S.ventilacionActual=3;
+      
+           ventilaciones[2].dibujar();
+              S.ventilacionActual = 2;
+              
          VLV.dibujar();
          Observa.generar();
       }
@@ -162,8 +173,9 @@ void escenarios(){
       case 12:{
       image(laboratorio3,0,0,width,height);
       db.dibujar();
-        V.dibujar();
-        S.ventilacionActual=1;
+      
+         ventilaciones[3].dibujar();
+              S.ventilacionActual = 3;
         
         if(noches.nocheActual==2)
         ProwlerRep.generar();

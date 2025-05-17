@@ -92,7 +92,7 @@ class Enemy {
     finality++;
     
     if(finality>=tiempoSeguir){
-    if(hidden!=-1){
+    if(hidden==-1){
       JS.merodeadorJS();
     JS.merodeadorJumpscare=true;
      } 

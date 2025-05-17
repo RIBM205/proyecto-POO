@@ -52,7 +52,7 @@ hide dejaro=new hide (width,height);
 
 
 PImage conductos;
-boolean cerrado;
+
 
 class ventilacion{
   int x,y,w,h;
@@ -60,6 +60,7 @@ class ventilacion{
   int rx,ry,rw,rh;
   int conductosActivos;
   int abrirX,abrirY,abrirT;
+  boolean cerrado;
 
     void dibujar(){
       if(conductosActivos==0){
@@ -104,21 +105,21 @@ class ventilacion{
     y=b;
     w=c;
     h=d;
-    rx=width*3;
-    ry=height*6;
-    rw=width*6;
-    rh=height;
+    rx=width/4;
+    ry=height-200;
+    rw=width/2;
+    rh=height/8;
     
-    vx=width*8;
-    vy=height*3;
-    vw=width*3;
-    vh=height*2;
+    vx=width/2+200;
+    vy=height/4+100;
+    vw=width/4;
+    vh=height/4;
     
-    abrirX=width;
-    abrirY=height;
+    abrirX=width/12;
+    abrirY=height/8;
     abrirT=50;
     }
 
 }
 
-ventilacion V= new ventilacion(width,height*3,width,height/2);
+ventilacion[] ventilaciones = new ventilacion[4];

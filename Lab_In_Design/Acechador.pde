@@ -30,8 +30,8 @@ class acechador {
 
     switch (posAct) {
       case 0:
-        x = 480;
-        y = 565;
+        x = width/2-120;
+        y = width/4-75;
         wd = 100;
         ht = 100;
         break;
@@ -70,7 +70,7 @@ class acechador {
 
     if (moveTime >= TiempoA) {
       int momentum = int(random(100)); 
-
+        println("Su momento es  "+momentum);
       if ((momentum < probAvance) && (posAct < 4)) {
         posAct++;
         //println("Avanza NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
@@ -82,10 +82,10 @@ class acechador {
     }
     if(camarasCerradas || camara!=10){ A.camActive=false;}
     
-    /*println("Tiempo= " + moveTime);
+    println("Tiempo= " + moveTime);
     println("Posición= " + posAct);
     println("Probabilidad= " + probAvance);
-    println("Cámara Activa= " + camActive);*/
+    println("Cámara Activa= " + camActive);
   }
   void scare(){
    if(posAct==3){

@@ -15,12 +15,17 @@ void setup(){
   for(int i=0;i<n;i++){
     C[i]=new Cables();
     }
+    
+  ventilaciones[0] = new ventilacion(width/4, height/2, 100, 50); // Recepción
+  ventilaciones[1] = new ventilacion(width/4, height/2, 100, 50); // Lab3
+  ventilaciones[2] = new ventilacion(width/4, height/2, 100, 50); // Baño
+  ventilaciones[3] = new ventilacion(width/4, height/2, 100, 50); // Sótano
 
   GM.llamar();
   
   //Sonidos//
   pasos = new SoundFile(this,"Audio/pasos.mp3");
-  mainMenu= new SoundFile(this,"AñosAtras.mp3");
+  mainMenu= new SoundFile(this,"Audio/AñosAtras.mp3");
 }
 
 void draw(){
@@ -33,7 +38,9 @@ GM.configuracion();
     //println(pausa);
     //println(tiempoPanel);
   //  println(empiezaTiempo);
-  println(estres);
+// println(estres);
+  //println(noches.tiempoJugado/10000);
+    //println("Tiempo Real"+noches.tiempoJugado);
    
     if (empiezaTiempo) {
                   tiempoPanel++;
@@ -49,16 +56,24 @@ GM.configuracion();
                return;}
                
          
-               
+              
               
  
- //println(noches.enTransicion);
- //println("XDDDDD  "+noches.tiempoTransicion);
+
  
   noches.enPausa(); 
   
   
-  //println(estres);
+  if(ActiveMenu){
+    if(!mainMenu.isPlaying()){
+        mainMenu.loop();
+      } 
+    } else {
+       if (mainMenu.isPlaying())
+          mainMenu.stop();
+    }
+  
+
 
 
   if(enPartida==true){
@@ -77,6 +92,7 @@ GM.configuracion();
     cafe.llenar();
     EST.dificultad();
    LabStory.opcionesEncuesta();
+   noches.reloj();
   
    numeracion();
      mostrar();
@@ -94,10 +110,10 @@ GM.configuracion();
      
   
     
-    
-    if(cerrado&&estres<=100){
-     EST.aumentar();
-   }
+          
+      if (EST.ventilacionCerrada() && estres <= 100) {
+        EST.aumentar();  
+      }
 
 
  } 
@@ -110,9 +126,7 @@ GM.configuracion();
 int Tpasos;
 
 void sonidos(){
-  if(ActiveMenu&&!pasos.isPlaying()){
-    mainMenu.play();
-  }
+  
   
   if(pasosS==true){
     Tpasos++;
@@ -134,29 +148,36 @@ void sonidos(){
 class Jumpscare{
   boolean slimeJumpscare, acechadorJumpscare,merodeadorJumpscare;
   int x,y;
+  int tiempoJumpscare;
  void slimeJS(){
- /*if(slimeJumpscare==true){
+ if(slimeJumpscare==true){
+   fill(0);
+   rect(0,0,width,height);
      image(slime,x,y,width,height);
        x=int(random(-50,50));
        y=int(random(-50,50));
-   }*/
+   }
  }
   void acechadorJS(){
-  /*if (acechadorJumpscare==true){
+  if (acechadorJumpscare==true){
+       fill(0);
+   rect(0,0,width,height);
      image(acechador,x,y,width,height);
        x=int(random(-50,50));
        y=int(random(-50,50));
   
-    }*/
+    }
  }
   
   void merodeadorJS(){
-  /*if(merodeadorJumpscare==true){
+  if(merodeadorJumpscare==true){
+       fill(0);
+   rect(0,0,width,height);
      image(merodeador,x,y,width,height);
        x=int(random(-50,50));
        y=int(random(-50,50));
-  
-    }*/
+        
+    }
   }
 }
 

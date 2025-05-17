@@ -42,6 +42,7 @@ class Palanca extends Estres{
         fill(100);
         square(x,y,75);
       } else {
+       image(fondo,0,0,width,height);  
         fill(100);
         square(x/2,y/2,600);
         fill(150,0,0);
@@ -136,6 +137,7 @@ class Valvula{
       fill(120,0,0,50);
       square(x,y,125);
     } else {
+     image(fondo,0,0,width,height);  
       pushMatrix();
       translate(x,y);
       rotate(radians(angulo));

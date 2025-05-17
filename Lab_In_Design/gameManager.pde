@@ -4,14 +4,16 @@ PImage planeta,poema;
 PImage proyectoAngerona;
 PImage MundoCruel;
 PImage mapaCam,noCam;
+PImage fondo;
+PImage saco;
 
 
 class GameManager{
 
   void llamar(){
-  cam0=loadImage("Cam0.jpg");
-  
-cam2=loadImage("Cam2.jpg");
+cam0=loadImage("Cam0.png");
+cam1=loadImage("Cam1.png");
+cam2=loadImage("Cam2.png");
 cam3=loadImage("Cam3.png");
 cam4=loadImage("Cam4.png");
 cam5=loadImage("Cam5.png");
@@ -20,8 +22,8 @@ cam7=loadImage("Cam7.png");
 cam8=loadImage("Cam8.png");
 cam9=loadImage("Cam9.png");
 cam10=loadImage("Cam10.jpg");
-
-
+cam11=loadImage("Cam11.png");
+cam12=loadImage("Cam12.png");
 noCam=loadImage("noCams.jpg");
 mapaCam=loadImage("MapaCamaras.png");
 //Escenarios
@@ -31,7 +33,7 @@ pasilloSecundario=loadImage("pasilloSec.png"); //2
 stairs=loadImage("EscalerasPB.png");        //3
 oficina=loadImage("SalaMandos.png");         //2
 twoHall=loadImage("PasilloDerecha.jpg");  //3
-cleaning=loadImage("cleaning.jpg");       //4
+cleaning=loadImage("cleaning.png");       //4
 twoLab=loadImage("escena2.jpg");          //5
 stairsS=loadImage("EscalerasSotano.png");    //6.1
 stairsR=loadImage("Escaleras_PA.png");      //6.2
@@ -62,7 +64,8 @@ mapaLab=loadImage("MapaLaboratorio.jpg");
 //////////////////////Assets Laboratorio//////////////////////////////////////////
 cafetera=loadImage("Assets/Cafetera.png");
 valvula=loadImage("Assets/Valvula.png");
-
+fondo=loadImage("Blur.png");
+saco=loadImage("Assets/SacoDeGranos.png");
 /////////////////////Assets Historia ///////////////////////////////
 wow=loadImage("Assets/Historia/WOW.png");
 Planeta=loadImage("Assets/Historia/Planeta.png");
@@ -114,7 +117,14 @@ proyectoAngerona=loadImage("Assets/Historia/ProyectoAngerona.png");
       }
     }
     
-    if(hidden==-1&&V.conductosActivos==0&&camarasCerradas==true&&PL.enPalanca==false&&P.panelAbierto==false&&!noches.enTransicion&&!inspeccionando){
+    if(hidden==-1&&
+    ventilaciones[0].conductosActivos == 0 &&
+    ventilaciones[1].conductosActivos == 0 &&
+    ventilaciones[2].conductosActivos == 0 &&
+    ventilaciones[3].conductosActivos == 0 &&
+    camarasCerradas==true&&PL.enPalanca==false&&P.panelAbierto==false&&!noches.enTransicion&&!inspeccionando&&!VLV.enMinijuego
+      &&!cafe.enCafetera)
+      {
       normalSetup=true;} 
       else {
       normalSetup=false;}
@@ -130,10 +140,14 @@ proyectoAngerona=loadImage("Assets/Historia/ProyectoAngerona.png");
     A.tiempoAvance=0;
     A.finality=0;
     normalSetup=true;
-    cerrado=false;
+
     noches.tiempoNoche=0;
     S.posSlime=0;
-    V.conductosActivos=0;
+    
+    for (int i = 0; i < ventilaciones.length; i++) {
+    ventilaciones[i].conductosActivos = 0;
+    ventilaciones[i].cerrado = false;
+  }
     PL.enPalanca=false;
     P.panelAbierto=false;
     S.espera=0;

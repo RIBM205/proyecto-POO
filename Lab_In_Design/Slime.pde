@@ -14,15 +14,11 @@ class slime{
       float tiempoAvance;
       
   void mostrar(){
-  if(V.conductosActivos==1){
+  if(ventilaciones[ventilacionActual].conductosActivos == 1){
     image(slime,SX,SY,SW,SH);
-      if (tiempoAvance > velocidadAvance * 2) {
-        avance = 2;
-      } else if (tiempoAvance > velocidadAvance) {
-        avance = 1;
-      } else {
-        avance = 0;
-      }
+    }
+    
+      
       switch(avance){
       case 0: {
       SX=width/3+50;
@@ -44,7 +40,7 @@ class slime{
       break;
       }
 
-    }
+    
     
    
   } //Fin de la funcion mostrar
@@ -69,9 +65,17 @@ class slime{
     if(aparicion==true){
       tiempoMov=0;
       tiempoAvance+=0.1;
+      
+      if (tiempoAvance > velocidadAvance * 2) {
+        avance = 2;
+      } else if (tiempoAvance > velocidadAvance) {
+        avance = 1;
+      } else {
+        avance = 0;
+      }
       }
   
-  /*println("Tiempo de Movimiento "+tiempoMov);
+ /* println("Tiempo de Movimiento "+tiempoMov);
   println("Esta en ventilacion "+posSlime);
   println("Esta en las ventilaciones? "+enVentilacion);*/
   
@@ -88,15 +92,16 @@ class slime{
   void bloquear(){
   if(avance==2){
        espera++;
-       
+       println("SE VIENE  "+espera);
      if(espera>=tiempoEspera){    
-        if(cerrado==true){
+        if(ventilaciones[ventilacionActual].cerrado){
         aparicion=false;
         enVentilacion=false;
         tiempoAvance=0;
         espera=0;
         posSlime=-1;
         avance=0;
+        println("BLOQUEADO");
         } else {        
         JS.slimeJS();
         JS.slimeJumpscare=true;

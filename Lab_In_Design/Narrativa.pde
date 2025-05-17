@@ -48,6 +48,7 @@ class Lab_Mysteries extends Estres{
     
     void generar(){
       if(inspeccionando){
+       image(fondo,0,0,width,height);  
         fill(#A02828);
         square(cerrarX,cerrarY,75);
       }
@@ -381,7 +382,7 @@ class Lab_Mysteries extends Estres{
 
 
 Lab_Mysteries LabStory= new Lab_Mysteries(width*5,width*2);
-Lab_Mysteries LibroS= new Lab_Mysteries(width*7,height*4);
+Lab_Mysteries LibroS= new Lab_Mysteries(width*8,height*3);
 Lab_Mysteries CartaDoc = new Lab_Mysteries(width*9,height*2);
 Lab_Mysteries ProwlerRep= new Lab_Mysteries(width, height*3);
 Lab_Mysteries  WOW= new Lab_Mysteries(width*10,height*5);
