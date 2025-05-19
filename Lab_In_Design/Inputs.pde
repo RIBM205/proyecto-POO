@@ -6,7 +6,7 @@ void keyPressed(){
       
     }
   }
-  if(enPartida==true&&hidden==-1){
+  if(enPartida==true&&hidden==-1&&!JS.enJumpscare){
     if(key=='e'||key=='E'){
     camarasCerradas=!camarasCerradas;
     }
@@ -22,7 +22,8 @@ void keyPressed(){
 
 void mouseDragged() {
   if (!PL.activada && PL.enPalanca) {
-    if (dist(mouseX, mouseY, PL.x * 1.25, PL.y * 0.9) < 25) {
+    if (mouseX >= PL.palancaX && mouseX <= PL.palancaX + 350 &&
+        mouseY >= PL.palancaY && mouseY <= PL.palancaY + 250) {
       PL.bajando = true;
     }
 
@@ -35,18 +36,24 @@ void mouseDragged() {
   }
 }
 
+void mouseReleased() {
+  if(escenario==2&&cable.enPanel)
+  cable.mouseSoltado(mouseX, mouseY);
+}
+
 
 
 void mousePressed(){
 //ESCONDITES
-if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
-   if(escenario==1 && mouseX>hl.x && mouseY>hl.y && mouseX<hl.x+hl.t && mouseY<hl.y+hl.t){ //Si el escenario es 1 (LABORATORIO) y se presiona en la zona marcada, cambias a a imagen para esconderte
+if(camarasCerradas&&enPartida==true){
+     if(!inspeccionando){
+   if(escenario==0 && mouseX>hl.x && mouseY>hl.y && mouseX<hl.x+hl.t && mouseY<hl.y+hl.t){ //Si el escenario es 1 (LABORATORIO) y se presiona en la zona marcada, cambias a a imagen para esconderte
        hidden=1;
      }
-      if(escenario==9 && !VLV.enMinijuego && mouseX>hs.x && mouseY>hs.y && mouseX<hs.x+hs.t && mouseY<hs.y+hs.t){ //Si el escenario es 9 (SOTANO) y se presiona en la zona marcada, cambias a a imagen para esconderte
+      if(escenario==7 &&  mouseX>hs.x && mouseY>hs.y && mouseX<hs.x+hs.t && mouseY<hs.y+hs.t){ //Si el escenario es 9 (SOTANO) y se presiona en la zona marcada, cambias a a imagen para esconderte
      hidden=2;
      }  
-     if(escenario==2 && mouseX>ho.x && mouseY>ho.y && mouseX<ho.x+ho.t && mouseY<ho.y+ho.t){ //Si el escenario es 0 (OFICINA) y se presiona en la zona marcada, cambias a a imagen para esconderte
+     if(escenario==5 && mouseX>ho.x && mouseY>ho.y && mouseX<ho.x+ho.t && mouseY<ho.y+ho.t){ //Si el escenario es 0 (OFICINA) y se presiona en la zona marcada, cambias a a imagen para esconderte
        hidden=0;
      }
         switch(hidden){
@@ -60,6 +67,7 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
         hidden=-1; 
        }
      }
+    } 
    }  
   if(ActiveMenu){ ///////////////////////////////MENUS////////////////////////////////////////////
     if(mouseX>MM.playX && mouseY>MM.playY && mouseX<MM.playX+500 && mouseY<MM.playY+100){
@@ -67,6 +75,13 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
     noches.transicion();
     return;
     }
+    if(mouseX>MM.creX && mouseY>MM.creY && mouseX<MM.creX+500 && mouseY<MM.creY+100){
+     enCreditos=true;
+   }
+     if(mouseX>MM.volverCX && mouseY>MM.volverCY && mouseX<MM.volverX+500 && mouseY<MM.volverY+100){
+     enCreditos=false;
+   }
+   
      if(mouseX>MM.exitX && mouseY>MM.exitY && mouseX<MM.exitX+500 && mouseY<MM.exitY+100){
     exit();
   }
@@ -83,24 +98,13 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
    }
    
    
+   
    if(!enMapa&&mouseX>MM.mainX && mouseY>MM.mainY && mouseX<MM.mainX+500 && mouseY<MM.mainY+100){
    pausa=false;
    ActiveMenu=true;
    GM.reset();
    }
- } //////////////////////////DEJAR DE ESCONDERSE////////////////////////////////////////////
-    
-   switch(hidden){
-       case 0: if(hidden==0&&mouseX>dejaro.x && mouseY>dejaro.y && mouseX<dejaro.x+dejaro.t && mouseY<dejaro.y+dejaro.t){
-        hidden=-1; 
-       } break;
-      case 1: if(hidden==1&&mouseX>dejarl.x && mouseY>dejarl.y && mouseX<dejarl.x+dejarl.t && mouseY<dejarl.y+dejarl.t){
-        hidden=-1; 
-       }
-        case 2:if(hidden==2&&mouseX>dejars.x && mouseY>dejars.y && mouseX<dejars.x+dejars.t && mouseY<dejars.y+dejars.t){
-        hidden=-1; 
-       }
-   }
+ }
    ///ESCENARIOS/////////////////////////
   if (normalSetup==true && enPartida==true) {
     if (mouseX > db.x && mouseY > db.y && mouseX < db.x + db.w && mouseY < db.y + db.h) { //Door Back
@@ -216,13 +220,14 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
 
   }//Sin Camaras, Ni Menu, ni escondido
           if(enPartida==true){
-            if(A.posAct==3&&camara==10&&mouseX > A.ex && mouseY > A.ey && mouseX < A.ex + A.et && mouseY < A.ey + A.et)
+            if(A.posAct==3&&camara==10&&mouseX > A.ex && mouseY > A.ey && mouseX < A.ex + 140 && mouseY < A.ey + 100)
             A.posAct=int(random(2));
       
             ventilacion Vactual = ventilaciones[S.ventilacionActual];
             
+            if(!inspeccionando&&hidden==-1){
                 if (!VLV.enMinijuego && mouseX > Vactual.x && mouseY > Vactual.y && mouseX < Vactual.x + Vactual.w && mouseY < Vactual.y + Vactual.h) {
-                  if (escenario == 0 || escenario == 7 || escenario == 9 || escenario == 12) {
+                  if (escenario == 1 || escenario == 7 || escenario == 9 || escenario == 13) {
                     Vactual.conductosActivos = 1;
                   }
                 }
@@ -241,31 +246,26 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
                     return;
                   }
                 }  
-                
-           if(escenario==8){
-            if(mouseX>P.x&&mouseX<P.x+50&&mouseY>P.y&&mouseY<P.y+50&&normalSetup==true)
-              P.panelAbierto=true;
+               } 
+           if(escenario==2){
+               cable.clicsPanel();
+               
+               if(cable.enPanel)
+            cable.mousePresionado(mouseX, mouseY);
+           }  
               
-              for (int i = 0; i < n; i++) {
-              float d = dist(mouseX, mouseY, C[i].posX[i],  C[i].posY[i]);
-              if (d <  C[i].radio / 2) {
-                println("Hiciste clic en el círculo #" + i);
-              }
-            }
               
-           if(mouseX>PL.x&&mouseX<PL.x+75&&mouseY>PL.y&&mouseY<PL.y+75&&normalSetup==true){
+           if(escenario==8&&mouseX>PL.x&&mouseX<PL.x+75&&mouseY>PL.y&&mouseY<PL.y+75&&normalSetup){
               PL.enPalanca=true;
             }
-            if(PL.enPalanca==true&&mouseX>PL.cerrarX&&mouseX<PL.cerrarX+50&&mouseY<PL.cerrarY+50&&mouseY>PL.cerrarY){
+            if(escenario==8&&PL.enPalanca==true&&mouseX>PL.cerrarX&&mouseX<PL.cerrarX+100&&mouseY<PL.cerrarY+50&&mouseY>PL.cerrarY){
             PL.enPalanca=false;
             }
-            if(P.panelAbierto==true&&mouseX>P.cerrarX&&mouseX<P.cerrarX+50&&mouseY<P.cerrarY+50&&mouseY>P.cerrarY){
-            P.panelAbierto=false;
-            }
-           }
+         
+           
            
            if(escenario==6){
-           if(!cafe.enCafetera && !inspeccionando){ 
+           if(!cafe.enCafetera && !inspeccionando &&  hidden==-1){ 
           if(mouseX>cafe.cafeX&&mouseY>cafe.cafeY&&mouseX<cafe.cafeX+300&&mouseY<cafe.cafeY+200){
             cafe.enCafetera=true;
             return;
@@ -273,14 +273,15 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
         }  
         
           if(cafe.enCafetera==true){
-            if(!cafe.llenando&&cafe.granosRestantes>0&&!cafe.cafeListo&&mouseX>cafe.granosX&&mouseY>cafe.granosY&&mouseX<cafe.granosX+50&&mouseY<cafe.granosY+50){
+            if(!cafe.llenando&&cafe.granosRestantes>0&&!cafe.cafeListo&&mouseX>cafe.granosX&&mouseY>cafe.granosY&&mouseX<cafe.granosX+250&&mouseY<cafe.granosY+300){
               cafe.llenar();
               cafe.llenando=true;
               cafe.granosRestantes--;
             }
             if(cafe.cafeListo){
-              if(mouseX>cafe.tazaX&&mouseY>cafe.tazaY&&mouseX<cafe.tazaX+50&&mouseY<cafe.tazaY+50){
+              if(mouseX>cafe.tazaX&&mouseY>cafe.tazaY&&mouseX<cafe.tazaX+150&&mouseY<cafe.tazaY+200){
                 estres-=10;
+                if(estres < 0) estres = 0;
                 cafe.cafeListo=false;   
               }  
             }
@@ -291,16 +292,18 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
 
            
            } //Si el escenario es 6
+            if(!inspeccionando){ 
              if(escenario==10&&mouseX>cafe.bolsaX&&mouseY>cafe.bolsaY&&mouseX<cafe.bolsaX+300&&mouseY<cafe.bolsaY+300){
               if(cafe.granosRestantes<3){
               cafe.granosRestantes++;             
              } else {
                fill(0);
+               textSize(20);
                text("No deberia de llevar mas granos",width/2,height/1.5);
              }
             }
             if(escenario==9){
-              if(!VLV.enMinijuego&&ventilaciones[2].conductosActivos==0){
+              if(!VLV.enMinijuego&&ventilaciones[2].conductosActivos==0&&!inspeccionando){
               if(mouseX>VLV.x&&mouseY>VLV.y&&mouseX<VLV.x+150&&mouseY<VLV.y+150){
                 VLV.enMinijuego=true;
               } 
@@ -310,8 +313,11 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
               VLV.angulo=0;
               }
             }
-            
+           } 
             }
+           
+          
+            
          }  //Si estas en partida
          
          
@@ -325,7 +331,7 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
              }
            }
            
-          if(!inspeccionando){ 
+          if(!inspeccionando && normalSetup){ 
            if(mouseX>LabStory.assetX&&mouseY>LabStory.assetY&&mouseX<LabStory.assetX+100&&mouseY<LabStory.assetY+100){
                  if(escenario==15 || escenario==7 || escenario==3){
                  inspeccionando=true;
@@ -334,38 +340,65 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
              
              if(escenario==0&&mouseX>Plan.assetX&&mouseY>Plan.assetY&&mouseX<Plan.assetX+200&&mouseY<Plan.assetY+100){
              inspeccionando=true;
+               if(!papel.isPlaying()){
+                  papel.play();
+                }
              }
              
-             if(escenario==6&&mouseX>LibroS.assetX&&mouseY>LibroS.assetY&&mouseX<LibroS.assetX+200&&mouseY<LibroS.assetY+200&&!cafe.enCafetera){
-                 inspeccionando=true;
-                 }
+             
+           
                  
                  if(noches.nocheActual==1){
                    if(escenario==13&&mouseX>OrdenA.assetX&&mouseY>OrdenA.assetY&&mouseX<OrdenA.assetX+100&&mouseY<OrdenA.assetY+200){
                      inspeccionando=true;
+                      if(!papel.isPlaying()){
+                          papel.play();
+                        }
                    }
+                     if(escenario==6&&mouseX>LibroS.assetX&&mouseY>LibroS.assetY&&mouseX<LibroS.assetX+200&&mouseY<LibroS.assetY+200&&!cafe.enCafetera){
+                 inspeccionando=true;
+                 if(!papel.isPlaying()){
+                          papel.play();
+                        }
+                 }
                  
                  }
                  
                  if(noches.nocheActual==2){
                    if(escenario==12&&mouseX>ProwlerRep.assetX&&mouseY>ProwlerRep.assetY&&mouseX<ProwlerRep.assetX+100&&mouseY<ProwlerRep.assetY+200){
                      inspeccionando=true;
+                     if(!papel.isPlaying()){
+                          papel.play();
+                        }
                    }
                    
                    if(escenario==8&&mouseX>Despido.assetX&&mouseY>Despido.assetY&&mouseX<Despido.assetX+150&&mouseY<Despido.assetY+200){
-                   inspeccionando=true;}
+                   inspeccionando=true;
+                   if(!papel.isPlaying()){
+                          papel.play();
+                        }  
+               }
                    
                  } //Para la noche 2
                  
                  if(noches.nocheActual==3){
                    if(escenario==14&&mouseX>WOW.assetX&&mouseY>WOW.assetY&&mouseX<WOW.assetX+100&&mouseY<WOW.assetY+200){
                      inspeccionando=true;
+                     if(!papel.isPlaying()){
+                          papel.play();
+                        }
                    }
                  if(escenario==10&&mouseX>PPiel.assetX&&mouseY>PPiel.assetY&&mouseX<PPiel.assetX+200&&mouseY<PPiel.assetY+200){
                 inspeccionando=true;
+                if(!papel.isPlaying()){
+                          papel.play();
+                        }
                 }
                  if(escenario==12&&mouseX>ProgressM.assetX&&mouseY>ProgressM.assetY&&mouseX<ProgressM.assetX+100&&mouseY<ProgressM.assetY+200){
                    inspeccionando=true;
+                   if(!papel.isPlaying()){
+                          papel.play();
+                        }
                  }
                  
                  }//Para la noche 3
@@ -373,9 +406,15 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
                 if(noches.nocheActual==4){ 
               if(escenario==8&&mouseX>CartaDoc.assetX&&mouseY>CartaDoc.assetY&&mouseX<CartaDoc.assetX+150&&mouseY<CartaDoc.assetY+200){
                   inspeccionando=true;
+                  if(!papel.isPlaying()){
+                          papel.play();
+                        }
                 }
                 if(escenario==11&&mouseX>VecinosP.assetX&&mouseY>VecinosP.assetY&&mouseX<VecinosP.assetX+200&&mouseY<VecinosP.assetY+100){
                   inspeccionando=true;
+                  if(!papel.isPlaying()){
+                          papel.play();
+                        }
                 }
                 
                 
@@ -384,15 +423,24 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
               if(noches.nocheActual==5){
                 if(escenario==9&&mouseX>Observa.assetX&&mouseY>Observa.assetY&&mouseX<Observa.assetX+100&&mouseY<Observa.assetY+200){
                   inspeccionando=true;
+                  if(!papel.isPlaying()){
+                          papel.play();
+                        }
                 }
                 if(escenario==12&&mouseX>Will.assetX&&mouseY>Will.assetY&&mouseX<Will.assetX+200&&mouseY<Will.assetY+100){
                   inspeccionando=true;
+                  if(!papel.isPlaying()){
+                          papel.play();
+                        }
                 }
               } //Para la noche 5
               
               if(noches.nocheActual==4){
                 if(escenario==14&&mouseX>PPensar.assetX&&mouseY>PPensar.assetY&&mouseX<PPensar.assetX+200&&mouseY<PPensar.assetY+200){
                 inspeccionando=true;
+                if(!papel.isPlaying()){
+                          papel.play();
+                        }
                 }
               }
            } // Si no se esta inspeccionando
@@ -430,6 +478,14 @@ if(camarasCerradas&&enPartida==true){ //ESCONDITES//////////////
                   empiezaTiempo=false;
                   tiempoPanel=0;
                   noches.FinDeNoche();
+                  
+                       if(silencio.isPlaying()){
+               silencio.stop();
+             }
+             
+                     if(Reloj.isPlaying()){
+               Reloj.stop();
+             }
                   
             }
          }

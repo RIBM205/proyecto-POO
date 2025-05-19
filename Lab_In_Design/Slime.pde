@@ -61,6 +61,9 @@ class slime{
   if(enVentilacion==true&&aparicion==false){
     posSlime=int(random(4));
     aparicion=true;
+      if(!pasosMetal.isPlaying()){
+      pasosMetal.play();
+      }
     }  
     if(aparicion==true){
       tiempoMov=0;
@@ -106,6 +109,10 @@ class slime{
         JS.slimeJS();
         JS.slimeJumpscare=true;
         posSlime=-1;
+        espera=0;
+        JS.enJumpscare = true;
+        JS.acechadorJumpscare = false;
+      JS.merodeadorJumpscare = false;
         }
       }
   

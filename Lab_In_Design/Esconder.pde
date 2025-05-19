@@ -8,35 +8,46 @@ int x,y,t;
   square(x,y,t);
   
     if(hidden==0){
-      image(eOfi,0,0,width,height); //Si estamos escondidos en la oficina, muestra la imagen del escondido, cambiando a variable escondido a 0
+      image(escondido,0,0,width,height); //Si estamos escondidos en la oficina, muestra la imagen del escondido, cambiando a variable escondido a 0
       dejaro.dejar();
       }
       if(hidden==1){
-      image(eLab,0,0,width,height); //Si estamos escondidos en la oficina, muestra la imagen del escondido, cambiando a variable escondido a 1
+      image(escondido,0,0,width,height); //Si estamos escondidos en la oficina, muestra la imagen del escondido, cambiando a variable escondido a 1
       dejarl.dejar();
       }
       if(hidden==2){
-      image(eSot,0,0,width,height); //Si estamos escondidos en la oficina, muestra la imagen del escondido, cambiando a variable escondido a 1
+      image(escondido,0,0,width,height); //Si estamos escondidos en la oficina, muestra la imagen del escondido, cambiando a variable escondido a 1
       dejars.dejar();
       }
+      
+      if(hidden!=-1){
+        if(!respiracion.isPlaying()){
+          respiracion.loop();
+        }
+      } else {
+        if(respiracion.isPlaying()){
+          respiracion.stop();
+        }
+      }
+      
      
   }
   hide(int a, int b){ //Constructor de la clase
   x=a;
   y=b;
-  t=50; //Tamaño
+  t=75; //Tamaño
   }
   
   void dejar(){
     switch(hidden){
       case 0: if(hidden==0){
-      square(x,y,t); }
+      image(tacha,x,y,t,t); }
       break;
       case 1: if(hidden==1){
-      square(x,y,t); }
+      image(tacha,x,y,t,t); }
     break;
       case 2: if(hidden==2){
-      square(x,y,t);}
+       image(tacha,x,y,t,t);}
     break;
     }
   }
@@ -64,18 +75,18 @@ class ventilacion{
 
     void dibujar(){
       if(conductosActivos==0){
-     stroke(70);
-    strokeWeight(3);
-    fill(120);
-    rect(x,y,w,h);
-    fill(80);
-    rect(x,y+10,w,h/5);
-    rect(x,y+30,w,h/5);
+     image(ventil,x,y,w,h);
     } 
     if(conductosActivos==1){
     image(conductos,0,0,width,height);
+    if(ventilacionFallando){
+        image(humo,0,0,width,height);
+      }
+      
     cerrar();
     regresar();
+    
+      
     }
   }
    void regresar(){
@@ -90,12 +101,8 @@ class ventilacion{
       fill(150);
       rect(vx,vy,vw,vh);
     } else if(cerrado==true) {
-    stroke(10);
-    strokeWeight(10);
-    fill(0,0,200,20);
-    rect(0,0,width,height);
-    fill(200,0,0,30);
-    square(abrirX,abrirY,abrirT);
+    image(vents,0,0,width,height);
+    image(tacha,abrirX,abrirY,abrirT,abrirT);
    
     }
     

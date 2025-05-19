@@ -1,34 +1,4 @@
 
-class Panel{
-int x,y;
-boolean panelAbierto;
-  void dibujar(){
-    if(panelAbierto==false){
-     fill(100);
-     square(x,y,75);
-    } else {
-    fill(100);
-    square(x/2,y/2,600);
-      for(int i=0;i<n;i++){
-      C[i].dibujar();
-      }
-    }
-    if(panelAbierto){cerrar();}
-  }
-   int cerrarX,cerrarY;
-    void cerrar(){
-      fill(150,0,0);
-      square(cerrarX,cerrarY,50);
-    }
-     Panel(){
-    x=width*5;
-    y=width*3;
-    cerrarX=width*2;
-    cerrarY=height;
-    }
-   
-}   
-
 class Palanca extends Estres{
   int x,y;
   float palancaX,palancaY;
@@ -45,20 +15,24 @@ class Palanca extends Estres{
        image(fondo,0,0,width,height);  
         fill(100);
         square(x/2,y/2,600);
-        fill(150,0,0);
-        circle(palancaX,palancaY,50);
+        if(!activada){
+        image(palancaU,palancaX,palancaY,350,250);
+        } else {
+        image(palancaD,palancaX,palancaY,350,250);
+        }
+       
       }
        if(enPalanca) cerrar();
     }
      int cerrarX,cerrarY;
     void cerrar(){
       fill(150,0,0);
-      square(cerrarX,cerrarY,50);
+      image(tacha,cerrarX,cerrarY,75,75);
     }
       Palanca(){
       x=width*4;
       y=height*3;
-      palancaX=width*5;
+      palancaX=width*3;
       palancaY=height*2.5;
       cerrarX=width+50;
       cerrarY=height;
@@ -83,47 +57,14 @@ class Palanca extends Estres{
        if(camarasDesconectadas){
          camarasDesconectadas=false;
          estres-=10;
+         if(!clickPalanca.isPlaying()){
+             clickPalanca.play();
+           }
          }
        }
 }
 
-int n=8;
-class Cables {
-  int espacioX=500,espacioY=160;
-  int cableX,cableY;
-  color [] colores={
-  color(200,0,0),
-  color(200,0,0,20),
-  color(0,200,0),
-   color(0,200,0,20),
-  color(0,0,200),
-   color(0,0,200,20),
-  color(200,200,0),
-  color(200,200,0,20)
-  };
-  float[] posX = new float[n];
-float[] posY = new float[n];
-float radio = 75;
-    
-    void dibujar(){
-       
-        for(int i=0;i<n;i++){
-          cableX=i%2;
-          cableY=i/2;
-           float cx = (cableX * espacioX) + width/4;
-          float cy = (cableY * espacioY) + height/4;
 
-          posX[i] = cx;
-          posY[i] = cy;
-          
-           fill(colores[i]);
-          circle((cableX*espacioX)+width/4,(cableY*espacioY)+height/4,75);
-        } 
-
-    }
-   
-        
-}
 
 class Valvula{
   float x,y;
@@ -151,8 +92,8 @@ class Valvula{
   }
   void cerrar(){
    if(enMinijuego){ 
-    fill(#B90404);
-    square(cerrarX,cerrarY,50);
+    
+    image(tacha,cerrarX,cerrarY,75,75);
     }
   }
      void reinicio(){
@@ -175,6 +116,204 @@ class Valvula{
 }
 
 Valvula VLV= new Valvula();
-Panel P=new Panel();
-Cables C[]= new Cables[n];
 Palanca PL= new Palanca();
+
+int n = 8;
+class Cable {
+  float x, y;
+  color c;
+  boolean conectado = false;
+  Cable conectadoA = null;
+  float radio = 75;
+
+  Cable(float x, float y, color c) {
+    this.x = x;
+    this.y = y;
+    this.c = c;
+  }
+
+  void dibujar() {
+    noStroke();
+    fill(c);
+    circle(x, y, radio);
+  }
+
+  boolean estaDentro(float mx, float my) {
+    return dist(mx, my, x, y) < radio / 2;
+  }
+
+  void conectar(Cable otro) {
+    conectado = true;
+    conectadoA = otro;
+  }
+
+  void dibujarConexion() {
+    if (conectado && conectadoA != null) {
+      stroke(red(c), green(c), blue(c));
+      strokeWeight(20);
+      line(x, y, conectadoA.x, conectadoA.y);
+
+     
+    }
+
+  }
+}
+
+class Cables {
+  int n = 8;
+  int espacioX = 500, espacioY = 120;
+  float ancho, alto;
+  Cable[] cables = new Cable[n];
+  int seleccionado = -1;
+  boolean arrastrando = false;
+  boolean enPanel;
+  int panelX,panelY;
+  int cerrarX,cerrarY;
+
+  Cables() {
+    crearCables();
+    panelX=width*4;
+    panelY=height*3;
+    cerrarX=width;
+    cerrarY=height;
+  }
+  
+  void abrir(){
+    if(!enPanel){
+      fill(150);
+      square(panelX,panelY,50);
+    } else {
+        image(fondo,0,0,width,height);  
+        fill(100);
+        square(width/4,height/4,600);
+        image(tacha,cerrarX,cerrarY,100,100);
+    }
+  }
+  
+  void clicsPanel(){
+    if(!enPanel && !inspeccionando && enPartida){
+      if(mouseX>panelX&&mouseY>panelY&&mouseX<panelX+50&&mouseY<panelY+50){
+        enPanel=true;
+      }
+    }
+    if(enPanel){
+      if(mouseX>cerrarX&&mouseY>cerrarY&&mouseX<cerrarX+100&&mouseY<cerrarY+100){
+      enPanel=false;
+       reiniciarConexiones();
+       arrastrando = false;
+      seleccionado = -1;
+      }
+    }
+  
+  }
+
+  void crearCables() {
+    color[] colores = {
+      color(200, 0, 0), color(200, 0, 0, 20),
+      color(0, 200, 0), color(0, 200, 0, 20),
+      color(0, 0, 200), color(0, 0, 200, 20),
+      color(200, 200, 0), color(200, 200, 0, 20)
+    };
+
+    for (int i = 0; i < n; i++) {
+      int col = i % 2;
+      int row = i / 2;
+      float x = (col * espacioX) + ancho / 4 + 300;
+      float y = (row * espacioY) + alto / 4 + 200;
+      cables[i] = new Cable(x, y, colores[i]);
+    }
+  }
+
+  void dibujar() {
+    // Dibujar conexiones
+    for (Cable c : cables) {
+      c.dibujarConexion();
+    }
+
+    // Dibujar círculos
+    for (Cable c : cables) {
+      c.dibujar();
+    }
+
+    // Línea en curso
+    if (arrastrando && seleccionado != -1) {
+      stroke(red(cables[seleccionado].c), green(cables[seleccionado].c), blue(cables[seleccionado].c));
+      strokeWeight(4);
+      line(cables[seleccionado].x, cables[seleccionado].y, mouseX, mouseY);
+      noStroke();
+    }
+  }
+
+  void mousePresionado(float mx, float my) {
+    if (!enPanel) return;
+    
+    for (int i = 0; i < n; i++) {
+      if (!cables[i].conectado && cables[i].estaDentro(mx, my)) {
+        seleccionado = i;
+        arrastrando = true;
+        break;
+      }
+    }
+  }
+
+  void mouseSoltado(float mx, float my) {
+    if (!enPanel) return;
+    if (seleccionado == -1) return;
+
+    for (int i = 0; i < n; i++) {
+      if (i != seleccionado && !cables[i].conectado && cables[i].estaDentro(mx, my)) {
+        // Comparar color sin transparencia
+        color c1 = sinAlpha(cables[i].c);
+        color c2 = sinAlpha(cables[seleccionado].c);
+
+        if (c1 == c2) {
+          cables[seleccionado].conectar(cables[i]);
+          cables[i].conectar(cables[seleccionado]);
+        }
+      }
+    }
+
+    arrastrando = false;
+    seleccionado = -1;
+    
+        if (todosConectados()) {
+        reinicio();     
+        enPanel = false; 
+         reiniciarConexiones();
+         arrastrando = false;
+      }
+  }
+
+  // Remueve alpha del color para comparación
+    color sinAlpha(color c) {
+    return color(red(c), green(c), blue(c));
+    }
+    boolean todosConectados() {
+    for (Cable c : cables) {
+      if (!c.conectado) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  void reiniciarConexiones() {
+    for (Cable c : cables) {
+      c.conectado = false;
+      c.conectadoA = null;
+    }
+    seleccionado = -1;
+    arrastrando = false;
+  }
+  
+  void reinicio(){
+    if(lucesDesconectadas){
+      lucesDesconectadas=false;
+      estres-=10;
+    }
+  }
+
+}
+
+ Cables cable = new Cables();
+ 

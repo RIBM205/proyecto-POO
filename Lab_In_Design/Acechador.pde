@@ -59,7 +59,7 @@ class acechador {
 
   void avanzar() {
     if (camActive) {
-      tiempoAvance = tiempoAcechadorMenor;
+      tiempoAvance = tiempoAcechadorMenor;  
       probAvance = probabilidadAcechadorMenor;
     } else {
       tiempoAvance = tiempoAcechadorMayor;
@@ -71,7 +71,7 @@ class acechador {
     if (moveTime >= TiempoA) {
       int momentum = int(random(100)); 
         println("Su momento es  "+momentum);
-      if ((momentum < probAvance) && (posAct < 4)) {
+      if ((momentum < probAvance) && (posAct < 3)) {
         posAct++;
         //println("Avanza NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
       } else {
@@ -82,10 +82,10 @@ class acechador {
     }
     if(camarasCerradas || camara!=10){ A.camActive=false;}
     
-    println("Tiempo= " + moveTime);
+    /*println("Tiempo= " + moveTime);
     println("Posición= " + posAct);
     println("Probabilidad= " + probAvance);
-    println("Cámara Activa= " + camActive);
+    println("Cámara Activa= " + camActive);*/
   }
   void scare(){
    if(posAct==3){
@@ -97,14 +97,17 @@ class acechador {
     if(finality>=oportunidadAcechador){
       JS.acechadorJumpscare=true;
       JS.acechadorJS();
+      JS.enJumpscare = true;
+      JS.slimeJumpscare = false;
+      JS.merodeadorJumpscare = false;
+      println("JumpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
     
     
   }
    void iluminar(){
      if(posAct==3){
-      fill(220,200,0);
-      square(ex,ey,et);
+      image(iluminar,ex,ey,140,100);
       }
     }
   

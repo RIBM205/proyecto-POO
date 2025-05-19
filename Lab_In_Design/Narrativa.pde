@@ -224,7 +224,7 @@ class Lab_Mysteries extends Estres{
         int generacion=int(random(100));
          println(generacion);
         
-      if(generacion<99){
+      if(generacion<10){
         int panel=int(random(3));
         encuestaActiva=true;
         
@@ -287,12 +287,22 @@ class Lab_Mysteries extends Estres{
         
         if(silencioPanel){
            image(proyectoAngerona,0,0,width/2,height);
+            if(!papel.isPlaying()){
+                          papel.play();
+                        }
         }
          if(cuentaPanel){ 
-            
+            image(reloj,0,0,width,height);
+               if(!Reloj.isPlaying()){
+             Reloj.play();
+           }
         }
+        
          if(listoPanel){ 
           image(MundoCruel,0,0,width/2,height);
+           if(!papel.isPlaying()){
+                          papel.play();
+                        }
         }
             if (tiempoCumplido && empiezaTiempo) {
               fill(150, 0, 0);
@@ -309,8 +319,14 @@ class Lab_Mysteries extends Estres{
           image(Angerona,x,y,width,height);
           x=int(random(-100,100));
            y=int(random(-100,100));
+            if(!silencio.isPlaying()){
+             silencio.play();
+           }
         } else if(cuentaPanel){
            image(poema,0,0,width,height);
+            if(!papel.isPlaying()){
+                          papel.play();
+                        }
         }  else if(listoPanel){
             fill(0,255-trs);
             rect(0,0,width,height);

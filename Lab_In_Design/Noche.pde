@@ -14,12 +14,14 @@ class Noches{
   int aumento;
   boolean entransicionFinal;
   boolean nocheTerminada;
+  boolean derrota=false;
   
   void inicioNoche(){
     tiempoNoche=millis();
     tiempoJugado=0;
     tiempoPausa=0;
     enPartida=true;
+    derrota=false;
   }
   
     void tiempoNoche(){
@@ -27,7 +29,7 @@ class Noches{
       
     if(enPartida==true&&!nocheTerminada){
     tiempoJugado= millis()-tiempoNoche-tiempoPausa;} 
-     if (tiempoJugado >= 570000) { //La duracion total de la noche es de 9 minutos y medio
+     if (tiempoJugado >= 480000) { //La duracion total de la noche es de 9 minutos y medio
      //   println("FIN");
       enPartida = false;
       entransicionFinal = true;
@@ -44,7 +46,7 @@ class Noches{
   void reloj(){
 
    
-   duracionMinutos= tiempoJugado/1187;
+   duracionMinutos = tiempoJugado / 1000;
 
   horas=21+(duracionMinutos/60);
   minutos=duracionMinutos%60;
@@ -59,6 +61,7 @@ class Noches{
   void mostrarReloj(){
     if(!camarasCerradas){
     fill(200,0,0);
+    textSize(30);
     text(nf(horas, 2) + ":" + nf(minutos, 2), 50, 50);
     }
   
@@ -121,6 +124,7 @@ void enPausa() {
       fill(0);
       rect(0,0,width,height);
       fill(255);
+      textSize(50);
       text("Noche Terminada",width/3,height/2);
        fill(0);
       noStroke();
@@ -150,6 +154,11 @@ void enPausa() {
   }
   
   void FinDeNoche(){
+    if(derrota){
+      derrota=false;
+      return;
+    }
+    
     nocheActual++;
     tiempoTransicionFinal = 0;
     aumento = 0;
@@ -165,17 +174,18 @@ void enPausa() {
     case 1:  { ////////////////////////////////////////////////////////////////////////////////NOCHE 1
     //Dificultad del Acechador
      probabilidadAcechadorMenor=30; //Probabilidad de Avanzar cuando esta siendo observado
-    tiempoAcechadorMenor=0.8;        //Tiempo de Avanzar cuando las camaras esta siendo observado
+    tiempoAcechadorMenor=0.3;        //Tiempo de Avanzar cuando las camaras esta siendo observado
     
     probabilidadAcechadorMayor=50;     //Probabilidad de avanzar con las camaras cerradas
-    tiempoAcechadorMayor=1.6;         //Tiempo de avanzar con las camaras cerradas
+    tiempoAcechadorMayor=0.6;         //Tiempo de avanzar con las camaras cerradas
     
-    oportunidadAcechador=540;         //El tiempo que tiene el jugador para regresar al acechador en su ultima posicion
-    TiempoA=200;                      //El tiempo en el que el acechador comprobara si puede moverse o no
+    oportunidadAcechador=420;         //El tiempo que tiene el jugador para regresar al acechador en su ultima posicion
+    TiempoA=540;                      //El tiempo en el que el acechador comprobara si puede moverse o no
     
     //Dificultad del Merodeador 
     M.dificultad=1;           //Dificultad del merodeador, determina que tan constantemente se puede mover.
     M.intervalo=420;         //El intervalo de movimientos
+    M.tiempoSeguir=360;
     
     //Dificultad del Slime 
     difSlime=0;               // El tiempo que tarda en comprobar si puede aparecer o no
@@ -184,112 +194,117 @@ void enPausa() {
     tiempoEspera=0;           //Tiempo maximo que tiene el jugador para cerrar la ventilación.
     
     //Aumento de la barra de estres
-    aumentoEstres=0.01;         //Que tanto aumenta el estres
+    aumentoEstres=0.02;         //Que tanto aumenta el estres
     EST.tiempoMaximo=1800;     //El tiempo con el que se comrpueba el nivel de estres para el fallo de los sistemas
       }
      break;
      
      case 2:{ ////////////////////////////////////////////////////////////////////////////////NOCHE 2
     //Dificultad del Acechador
-     probabilidadAcechadorMenor=30;
-    tiempoAcechadorMenor=0.02;    
+   probabilidadAcechadorMenor=35; //Probabilidad de Avanzar cuando esta siendo observado
+    tiempoAcechadorMenor=0.4;        //Tiempo de Avanzar cuando las camaras esta siendo observado
     
-    probabilidadAcechadorMayor=70;
-    tiempoAcechadorMayor=0.06;
+    probabilidadAcechadorMayor=60;     //Probabilidad de avanzar con las camaras cerradas
+    tiempoAcechadorMayor=0.7;         //Tiempo de avanzar con las camaras cerradas
     
-    oportunidadAcechador=4;
-    TiempoA=5;
-    //Dificultad del Merodeador DESACTIVADO EN NOCHE UNO
-    M.dificultad=0;
-    M.intervalo=120;
+    oportunidadAcechador=360;         //El tiempo que tiene el jugador para regresar al acechador en su ultima posicion
+    TiempoA=480;                      //El tiempo en el que el acechador comprobara si puede moverse o no
     
-    //Dificultad del Slime
-    difSlime=10;
-    probAparecer=90;
-    velocidadAvance=10;
-    tiempoEspera=20;
+    //Dificultad del Merodeador 
+    M.dificultad=4;           //Dificultad del merodeador, determina que tan constantemente se puede mover.
+    M.intervalo=420;         //El intervalo de movimientos
+    M.tiempoSeguir=360;
+    
+    //Dificultad del Slime 
+    difSlime=0;               // El tiempo que tarda en comprobar si puede aparecer o no
+        probAparecer=0;       // Probabilidad de aparecer
+    velocidadAvance=0;        //Velocidad a la que avanza el Slime una vez aparece en las ventilaciones
+    tiempoEspera=0;           //Tiempo maximo que tiene el jugador para cerrar la ventilación.
     
     //Aumento de la barra de estres
-    aumentoEstres=0.5;
-    EST.tiempoMaximo=10;
+    aumentoEstres=0.05;         //Que tanto aumenta el estres
+    EST.tiempoMaximo=1200;     //El tiempo con el que se comrpueba el nivel de estres para el fallo de los sistemas
      }
      break;
      
       case 3:{ ////////////////////////////////////////////////////////////////////////////////NOCHE 3
-  //Dificultad del Acechador
-     probabilidadAcechadorMenor=30;
-    tiempoAcechadorMenor=0.02;    
+     probabilidadAcechadorMenor=40; //Probabilidad de Avanzar cuando esta siendo observado
+    tiempoAcechadorMenor=0.5;        //Tiempo de Avanzar cuando las camaras esta siendo observado
     
-    probabilidadAcechadorMayor=70;
-    tiempoAcechadorMayor=0.06;
+    probabilidadAcechadorMayor=70;     //Probabilidad de avanzar con las camaras cerradas
+    tiempoAcechadorMayor=0.8;         //Tiempo de avanzar con las camaras cerradas
     
-    oportunidadAcechador=4;
-    TiempoA=5;
-    //Dificultad del Merodeador DESACTIVADO EN NOCHE UNO
-    M.dificultad=0;
-    M.intervalo=120;
+    oportunidadAcechador=300;         //El tiempo que tiene el jugador para regresar al acechador en su ultima posicion
+    TiempoA=400;                      //El tiempo en el que el acechador comprobara si puede moverse o no
     
-    //Dificultad del Slime
-    difSlime=10;
-    probAparecer=90;
-    velocidadAvance=10;
-    tiempoEspera=20;
+    //Dificultad del Merodeador 
+    M.dificultad=8;           //Dificultad del merodeador, determina que tan constantemente se puede mover.
+    M.intervalo=360;         //El intervalo de movimientos
+    M.tiempoSeguir=300;
+    
+    //Dificultad del Slime 
+    difSlime=300;               // El tiempo que tarda en comprobar si puede aparecer o no
+        probAparecer=30;       // Probabilidad de aparecer
+    velocidadAvance=240;        //Velocidad a la que avanza el Slime una vez aparece en las ventilaciones
+    tiempoEspera=300;           //Tiempo maximo que tiene el jugador para cerrar la ventilación.
     
     //Aumento de la barra de estres
-    aumentoEstres=0.5;
-    EST.tiempoMaximo=10;
+    aumentoEstres=0.07;         //Que tanto aumenta el estres
+    EST.tiempoMaximo=1000;     //El tiempo con el que se comrpueba el nivel de estres para el fallo de los sistemas
      }
      break;
      
       case 4:{ ////////////////////////////////////////////////////////////////////////////////NOCHE 4
-  //Dificultad del Acechador
-     probabilidadAcechadorMenor=30;
-    tiempoAcechadorMenor=0.02;    
+     probabilidadAcechadorMenor=40; //Probabilidad de Avanzar cuando esta siendo observado
+    tiempoAcechadorMenor=0.6;        //Tiempo de Avanzar cuando las camaras esta siendo observado
     
-    probabilidadAcechadorMayor=70;
-    tiempoAcechadorMayor=0.06;
+    probabilidadAcechadorMayor=70;     //Probabilidad de avanzar con las camaras cerradas
+    tiempoAcechadorMayor=0.9;         //Tiempo de avanzar con las camaras cerradas
     
-    oportunidadAcechador=4;
-    TiempoA=5;
-    //Dificultad del Merodeador DESACTIVADO EN NOCHE UNO
-    M.dificultad=0;
-    M.intervalo=120;
+    oportunidadAcechador=300;         //El tiempo que tiene el jugador para regresar al acechador en su ultima posicion
+    TiempoA=360;                      //El tiempo en el que el acechador comprobara si puede moverse o no
     
-    //Dificultad del Slime
-    difSlime=10;
-    probAparecer=90;
-    velocidadAvance=10;
-    tiempoEspera=20;
+    //Dificultad del Merodeador 
+    M.dificultad=12;           //Dificultad del merodeador, determina que tan constantemente se puede mover.
+    M.intervalo=300;         //El intervalo de movimientos
+    M.tiempoSeguir=300;
+    
+    //Dificultad del Slime 
+    difSlime=240;               // El tiempo que tarda en comprobar si puede aparecer o no
+        probAparecer=50;       // Probabilidad de aparecer
+    velocidadAvance=240;        //Velocidad a la que avanza el Slime una vez aparece en las ventilaciones
+    tiempoEspera=240;           //Tiempo maximo que tiene el jugador para cerrar la ventilación.
     
     //Aumento de la barra de estres
-    aumentoEstres=0.5;
-    EST.tiempoMaximo=10;
+    aumentoEstres=0.1;         //Que tanto aumenta el estres
+    EST.tiempoMaximo=1000;     //El tiempo con el que se comrpueba el nivel de estres para el fallo de los sistemas
      }
      break;
      
       case 5:{ ////////////////////////////////////////////////////////////////////////////////NOCHE 5
-  //Dificultad del Acechador
-     probabilidadAcechadorMenor=30;
-    tiempoAcechadorMenor=0.02;    
+       probabilidadAcechadorMenor=40; //Probabilidad de Avanzar cuando esta siendo observado
+    tiempoAcechadorMenor=0.8;        //Tiempo de Avanzar cuando las camaras esta siendo observado
     
-    probabilidadAcechadorMayor=70;
-    tiempoAcechadorMayor=0.06;
+    probabilidadAcechadorMayor=70;     //Probabilidad de avanzar con las camaras cerradas
+    tiempoAcechadorMayor=1.0;         //Tiempo de avanzar con las camaras cerradas
     
-    oportunidadAcechador=4;
-    TiempoA=5;
-    //Dificultad del Merodeador DESACTIVADO EN NOCHE UNO
-    M.dificultad=0;
-    M.intervalo=120;
+    oportunidadAcechador=240;         //El tiempo que tiene el jugador para regresar al acechador en su ultima posicion
+    TiempoA=300;                      //El tiempo en el que el acechador comprobara si puede moverse o no
     
-    //Dificultad del Slime
-    difSlime=10;
-    probAparecer=90;
-    velocidadAvance=10;
-    tiempoEspera=20;
+    //Dificultad del Merodeador 
+    M.dificultad=15;           //Dificultad del merodeador, determina que tan constantemente se puede mover.
+    M.intervalo=200;         //El intervalo de movimientos
+    M.tiempoSeguir=300;
+    
+    //Dificultad del Slime 
+    difSlime=120;               // El tiempo que tarda en comprobar si puede aparecer o no
+        probAparecer=80;       // Probabilidad de aparecer
+    velocidadAvance=200;        //Velocidad a la que avanza el Slime una vez aparece en las ventilaciones
+    tiempoEspera=180;           //Tiempo maximo que tiene el jugador para cerrar la ventilación.
     
     //Aumento de la barra de estres
-    aumentoEstres=0.5;
-    EST.tiempoMaximo=10;
+    aumentoEstres=0.15;         //Que tanto aumenta el estres
+    EST.tiempoMaximo=800;     //El tiempo con el que se comrpueba el nivel de estres para el fallo de los sistemas
      }
      break;
      

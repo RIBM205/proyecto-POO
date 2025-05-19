@@ -1,22 +1,32 @@
 boolean ActiveMenu=true;
 boolean pausa=false;
 boolean enMapa;
+boolean enCreditos;
 
 class Menus{
-  int playX=width*3+50,playY=height*3;
+  int playX=width*3+50,playY=height*2;
   int exitX=width*3+50,exitY=height*5;
+  int creX,creY;
   
   int resX=width*3+50,resY=height*2;
   int mainX=width*3+50,mainY=height*5;
   int mapaX=width*3+50,mapaY=height*3+50;
   
-   int creX=width*9,creY=height*6;
+   
   int volverX=0,volverY=0;
+   int volverCX,volverCY;
   
 
-  
+  Menus(){
+  creX=width*3+50;
+  creY=height*3+50;
+  volverCX=width*4;
+  volverCY=height*7;
+  }
   
   void MainMenu(){
+ image(menuP,0,0,width,height);
+ 
   fill(255);
   textSize(100);
   text("LAB IN DESIGN",290,100);
@@ -25,7 +35,12 @@ class Menus{
   fill(255);
   rect(playX,playY,500,100);
   fill(0);
-  text("Jugar",470,375);
+  text("Jugar",470,275);
+  
+    fill(255);
+  rect(creX,creY,500,100);
+  fill(0);
+  text("Creditos",470,425);
   
     fill(255);
  rect(exitX,exitY,500,100);
@@ -59,6 +74,19 @@ class Menus{
   text("Menu Principal",370,580);
   }
  } 
+ 
+ void creditos(){
+   if(enCreditos){
+   image(creditos,0,0,width,height);
+       fill(255);
+   rect(volverCX,volverCY,500,100);
+    fill(0);
+    textSize(75);
+    text("Volver",width/12+20,height/8-30);
+   }
+ 
+ }
+ 
   void mapa(){
   if(enMapa){
   image(mapaLab,0,0,width,height);

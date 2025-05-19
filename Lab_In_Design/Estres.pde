@@ -93,11 +93,19 @@ class Estres{
          int sistemaFallo=int(random(3));
          println("Fallo El Sistema  "+sistemaFallo);
            switch(sistemaFallo){
-             case 0: camarasDesconectadas=true;
+             case 0: {camarasDesconectadas=true; 
+                if(!lucesD.isPlaying()){
+                 lucesD.play();
+                 }
+               }
              break;
              case 1: lucesDesconectadas=true;
              break;
-             case 2: ventilacionFallando=true;
+             case 2:{ ventilacionFallando=true;
+               if(!gas.isPlaying()){
+                 gas.play();
+                 }
+             }
              break;
            } //Fin del Switch
            coolDown=true;
@@ -139,12 +147,17 @@ float cerrarX,cerrarY;
     } else {
     image(fondo,0,0,width,height);  
     image(cafetera,width/4,height/3,700,500);
-     fill(150,0,0);
-    square(cerrarX,cerrarY,75);
-     fill(#794831);
-    if(granosRestantes>0)
-    square(granosX,granosY,50);
-      
+    image(tacha,cerrarX,cerrarY,75,75);
+    
+      if(granosRestantes==3){
+     image(vasoL,granosX,granosY,250,300);
+     } else if(granosRestantes==1||granosRestantes==2){
+     image(vasoML,granosX,granosY,250,300);
+     } 
+     else if(granosRestantes<=0){
+     image(vasoV,granosX,granosY,250,300);
+     } 
+     
       if(llenando){
          fill(#4DBF63);
          } else {
@@ -158,9 +171,7 @@ float cerrarX,cerrarY;
     
       if(llenando&&granosRestantes>=0){ 
          if(escenario==6&&enCafetera){
-      noStroke();
-      fill(#EA6C32);
-       rect(width/3,height/1.2,400,25);
+        image(fuego,0,0,width,height);
       } 
        tiempoLlenado++;
        
@@ -176,8 +187,9 @@ float cerrarX,cerrarY;
     }
    void tomarCafe(){
      if(cafeListo &&enCafetera){
-       fill(#E5DEDE);
-       square(tazaX,tazaY,50);
+      image(tazaL,tazaX,tazaY,150,200);
+     } else if(!cafeListo&&enCafetera){
+       image(tazaV,tazaX,tazaY,150,200);
      }
    } 
    
@@ -192,10 +204,10 @@ float cerrarX,cerrarY;
       
       granosRestantes=3;
       
-      granosX=width*8;
+      granosX=width*7;
       granosY=height*5;
       
-      tazaX=width*8.5;
+      tazaX=width*9;
       tazaY=height*5;
       
       bolsaX=width*3;

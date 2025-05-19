@@ -5,8 +5,12 @@ PImage proyectoAngerona;
 PImage MundoCruel;
 PImage mapaCam,noCam;
 PImage fondo;
-PImage saco;
-
+PImage saco,humo,tacha,vasoV,tazaV,tazaL,vasoML,vasoL,palancaU,palancaD;
+PImage menuP;
+PImage vents;
+PImage logoJ;
+PImage reloj,iluminar,fuego,escondido;
+PImage creditos,ventil;
 
 class GameManager{
 
@@ -40,7 +44,7 @@ stairsR=loadImage("Escaleras_PA.png");      //6.2
 restRoom=loadImage("Sala.png");            //7
 sotano=loadImage("Sotano.png");           //9
 SR=loadImage("DarkRoom.jpg");             //11
-conductos=loadImage("conductos.jpg");      //Conductos
+conductos=loadImage("Ventilacion.png");      //Conductos
 
 laboratorio1=loadImage("Lab1.png");
 laboratorio2=loadImage("Lab2.png");
@@ -48,11 +52,8 @@ laboratorio3=loadImage("Lab3.png");
 laboratorio4=loadImage("Lab4.png");
 laboratorio5=loadImage("Lab5.png");
 laboratorio6=loadImage("Lab6.png");
+escondido=loadImage("Escondido.jpg");
 
-//Imagenes para los escondites
-eOfi=loadImage("EscOf.jpg");
-eLab=loadImage("EscLab.jpg");
-eSot=loadImage("EscSot.jpg");
 
 //////////////////
 acechador = loadImage("Enemigos/Acechador.png");
@@ -61,11 +62,27 @@ slime=loadImage("Enemigos/Slime.png");
 Angerona=loadImage("Enemigos/Angerona.png");
 //////////////////////Menus/////////////////////////////////////
 mapaLab=loadImage("MapaLaboratorio.jpg");
+menuP=loadImage("Menu.png");
+logoJ=loadImage("Logo.png");
+creditos=loadImage("Creditos.jpg");
 //////////////////////Assets Laboratorio//////////////////////////////////////////
+ventil=loadImage("Assets/ventilaciones.png");
 cafetera=loadImage("Assets/Cafetera.png");
 valvula=loadImage("Assets/Valvula.png");
 fondo=loadImage("Blur.png");
 saco=loadImage("Assets/SacoDeGranos.png");
+humo=loadImage("Assets/Humo.png");
+tacha=loadImage("Assets/cruz.png");
+tazaV=loadImage("Assets/Taza_vacia.png");
+tazaL=loadImage("Assets/Taza_llena.png");
+palancaD=loadImage("Assets/Palanca_down.png");
+palancaU=loadImage("Assets/Palanca_up.png");
+vents=loadImage("Assets/Ventilacion_abierta.png");
+vasoL=loadImage("Assets/VasoLleno.png");
+vasoML=loadImage("Assets/VasoMedio.png");
+vasoV=loadImage("Assets/VasoVacio.png");
+iluminar=loadImage("Assets/Iluminar.png");
+fuego=loadImage("Assets/Fuego.png");
 /////////////////////Assets Historia ///////////////////////////////
 wow=loadImage("Assets/Historia/WOW.png");
 Planeta=loadImage("Assets/Historia/Planeta.png");
@@ -98,6 +115,7 @@ ordenArresto=loadImage("Assets/Historia/OrdenArresto.png"); //Escenario  14   No
 poema=loadImage("Assets/Historia/Poema.jpg");
 MundoCruel=loadImage("Assets/Historia/CruelMundo.png");
 proyectoAngerona=loadImage("Assets/Historia/ProyectoAngerona.png");
+reloj=loadImage("Assets/Historia/RelojDetenido.png");
   }
   
   void configuracion(){
@@ -122,8 +140,9 @@ proyectoAngerona=loadImage("Assets/Historia/ProyectoAngerona.png");
     ventilaciones[1].conductosActivos == 0 &&
     ventilaciones[2].conductosActivos == 0 &&
     ventilaciones[3].conductosActivos == 0 &&
-    camarasCerradas==true&&PL.enPalanca==false&&P.panelAbierto==false&&!noches.enTransicion&&!inspeccionando&&!VLV.enMinijuego
-      &&!cafe.enCafetera)
+    camarasCerradas==true&&PL.enPalanca==false&&!noches.enTransicion&&!inspeccionando&&!VLV.enMinijuego
+      &&!cafe.enCafetera
+      &&!cable.enPanel)
       {
       normalSetup=true;} 
       else {
@@ -141,7 +160,7 @@ proyectoAngerona=loadImage("Assets/Historia/ProyectoAngerona.png");
     A.finality=0;
     normalSetup=true;
 
-    noches.tiempoNoche=0;
+    
     S.posSlime=0;
     
     for (int i = 0; i < ventilaciones.length; i++) {
@@ -149,7 +168,7 @@ proyectoAngerona=loadImage("Assets/Historia/ProyectoAngerona.png");
     ventilaciones[i].cerrado = false;
   }
     PL.enPalanca=false;
-    P.panelAbierto=false;
+ 
     S.espera=0;
     PL.palancaY=250;
     PL.bajando=false;
@@ -180,7 +199,13 @@ proyectoAngerona=loadImage("Assets/Historia/ProyectoAngerona.png");
    LabStory.alucinando=false;
    M.nodoActual=12;
    M.movimiento=0;
-   
+   JS.tiempoJumpscare=0;
+   M.finality=0;
+   M.delay=0;
+   M.enPersecucion=false;
+   M.jugadorHuyo=false;
+   //cable.enPanel = false; 
+   //cable.reiniciarConexiones();
    
     
     } //Fin de la Funcion Reset

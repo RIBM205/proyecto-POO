@@ -47,12 +47,9 @@ void escenarios(){
         case 0:{
          image(recepcion,0,0,width,height); //Recepcion
            dd.dibujar();
-           
-            if(!inspeccionando) 
-              ventilaciones[0].dibujar();
-              S.ventilacionActual = 0;
-            
-           if (ventilaciones[0].conductosActivos == 0)
+           if(!inspeccionando)
+            hl.esconder();
+            if(hidden==-1)
             Plan.generar();
        }
        break;
@@ -62,6 +59,11 @@ void escenarios(){
          descaleras.dibujar();
          dPasilloSec.dibujar();
           db.dibujar();
+          S.ventilacionActual = 0;
+          
+          if(!inspeccionando)
+          ventilaciones[0].dibujar();
+           
           
          if(noches.nocheActual==2) 
           WithUs.generar();
@@ -76,6 +78,14 @@ void escenarios(){
       lab5.dibujar();
       lab6.dibujar();
       db.dibujar();
+      
+      
+      cable.abrir();
+      
+      if (cable.enPanel) 
+       cable.dibujar();
+        
+        
       }
       break;
       case 3:{
@@ -83,6 +93,8 @@ void escenarios(){
        darriba.dibujar();
        dabajo.dibujar();
        db.dibujar();
+       
+       if(noches.nocheActual==5)
        LabStory.generar();
        }
       break;
@@ -97,6 +109,7 @@ void escenarios(){
       image(stairsS,0,0,width,height);
         db.dibujar();
         descaleras.dibujar();
+         ho.esconder();
       }
       break;
       case 6:{
@@ -105,53 +118,76 @@ void escenarios(){
       dd.dibujar();
       bajar.dibujar();
       cafe.dibujar();
+      if(cafe.enCafetera)
       cafe.tomarCafe();   
+      if(!cafe.enCafetera)
       LibroS.generar();
       }
       break;
         case 7:{
       image(cleaning,0,0,width,height);
        db.dibujar();
+        S.ventilacionActual = 1;
+        
+        if(hidden==-1)
            ventilaciones[1].dibujar();
-              S.ventilacionActual = 1;
+             
+              
+               if(!inspeccionando  &&ventilaciones[1].conductosActivos == 0){
+               hs.esconder();
+               }
+       
+       if(hidden==-1&&ventilaciones[1].conductosActivos == 0)
        LabStory.generar();
+       
       }
       break;
       
       case 8:{
       image(oficina,0,0,width,height);
       db.dibujar();
-      P.dibujar();
+    
+      if(!inspeccionando)
       PL.dibujar();
      
-     if(!PL.enPalanca && !P.panelAbierto) 
+     if(!PL.enPalanca && !inspeccionando) 
       EST.feedback();
       
-      
+     if(!PL.enPalanca){ 
       if(noches.nocheActual==2)
       Despido.generar();
       
       if(noches.nocheActual==4)
       CartaDoc.generar();
+        }
       }
       break;
       
       case 9:{
       image(sotano,0,0,width,height); //Si estamos en este escenario, se mostrara la oppcion de esconderse para ese escenario. 
       db.dibujar();
-      hs.esconder();
+      S.ventilacionActual = 2;
+     
       
-           ventilaciones[2].dibujar();
-              S.ventilacionActual = 2;
-              
+      if(hidden==-1){
+         if(!VLV.enMinijuego&&!inspeccionando)  
+          ventilaciones[2].dibujar();
+         
+       if (ventilaciones[2].conductosActivos == 0 &&!inspeccionando) {
          VLV.dibujar();
+         
+        if(noches.nocheActual==5&&!VLV.enMinijuego) 
          Observa.generar();
+         }
+         }
       }
       break;
       
       case 10:{
       image(laboratorio1,0,0,width,height);
       db.dibujar();
+      
+      if(!inspeccionando)
       cafe.recogerGranos();
       
       if(noches.nocheActual==3)
@@ -173,9 +209,8 @@ void escenarios(){
       case 12:{
       image(laboratorio3,0,0,width,height);
       db.dibujar();
-      
-         ventilaciones[3].dibujar();
-              S.ventilacionActual = 3;
+     
+             
         
         if(noches.nocheActual==2)
         ProwlerRep.generar();
@@ -192,7 +227,12 @@ void escenarios(){
       image(laboratorio4,0,0,width,height);
       db.dibujar();
       
-        if(noches.nocheActual==1)
+        S.ventilacionActual = 3;
+       
+       if(!inspeccionando)
+         ventilaciones[3].dibujar();
+      
+        if(noches.nocheActual==1&&ventilaciones[3].conductosActivos == 0)
           OrdenA.generar();
           
       }
@@ -219,7 +259,11 @@ void escenarios(){
       break;
       
     }//FIN DEL SWITCH
-
+    
+    if(lucesDesconectadas){
+      fill(0,230);
+      rect(0,0,width,height);
+    }
 
   
 }
